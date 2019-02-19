@@ -1,0 +1,436 @@
+Coq < Lemma Ejercicio27 : (n,m:nat) (le n m)->{z:Zr|(Natural z)/\(Diff m n z)}.
+1 subgoal
+
+  ============================
+   (n,m:nat)(le n m)->{z:Zr | ((Natural z)/\(Diff m n z))}
+
+Primero hacemos Induction sobre n.
+
+Ejercicio27 < Induction n.
+2 subgoals
+
+  n : nat
+  ============================
+   (m:nat)(le (0) m)->{z:Zr | ((Natural z)/\(Diff m (0) z))}
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora hacemos Induction sobre m.
+
+Ejercicio27 < Induction m.
+3 subgoals
+
+  n : nat
+  m : nat
+  ============================
+   (le (0) (0))->{z:Zr | ((Natural z)/\(Diff (0) (0) z))}
+
+subgoal 2 is:
+ (n0:nat)
+  ((le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))})
+  ->(le (0) (S n0))
+  ->{z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora usamos la tactica Exists para darle un z que pruebe el objetivo, y nos deja
+para probar que ese numero cumple la condicion a la derecha del "tal que".
+
+Ejercicio27 < Exists cero.
+3 subgoals
+
+  n : nat
+  m : nat
+  H : (le (0) (0))
+  ============================
+   (Natural cero)/\(Diff (0) (0) cero)
+
+subgoal 2 is:
+ (n0:nat)
+  ((le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))})
+  ->(le (0) (S n0))
+  ->{z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora hacemos Split para dividir el AND.
+
+Ejercicio27 < Split.
+4 subgoals
+
+  n : nat
+  m : nat
+  H : (le (0) (0))
+  ============================
+   (Natural cero)
+
+subgoal 2 is:
+ (Diff (0) (0) cero)
+subgoal 3 is:
+ (n0:nat)
+  ((le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))})
+  ->(le (0) (S n0))
+  ->{z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+subgoal 4 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora aplicamos el constructor Cero_nat.
+
+Ejercicio27 < Apply Cero_nat.
+3 subgoals
+
+  n : nat
+  m : nat
+  H : (le (0) (0))
+  ============================
+   (Diff (0) (0) cero)
+
+subgoal 2 is:
+ (n0:nat)
+  ((le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))})
+  ->(le (0) (S n0))
+  ->{z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora aplicamos el constructor Diff_n pasandole como parametro (0).
+
+Ejercicio27 < Apply (Diff_n (0)).
+2 subgoals
+
+  n : nat
+  m : nat
+  ============================
+   (n0:nat)
+    ((le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))})
+    ->(le (0) (S n0))
+    ->{z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio27 < Intros.
+2 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  ============================
+   {z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Volvemos a usar Exists para proponer un z.
+
+Ejercicio27 < Exists (pos(pred n0)).
+2 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  ============================
+   (Natural (pos (pred n0)))/\(Diff (S n0) (0) (pos (pred n0)))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Volvemos a romper el AND con Split.
+
+Ejercicio27 < Split.
+3 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  ============================
+   (Natural (pos (pred n0)))
+
+subgoal 2 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora eliminamos n0 con la tactica Elim.
+
+Ejercicio27 < Elim n0.
+4 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  ============================
+   (Natural (pos (pred (0))))
+
+subgoal 2 is:
+ (n1:nat)(Natural (pos (pred n1)))->(Natural (pos (pred (S n1))))
+subgoal 3 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 4 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio27 < Simpl.
+4 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  ============================
+   (Natural (pos (0)))
+
+subgoal 2 is:
+ (n1:nat)(Natural (pos (pred n1)))->(Natural (pos (pred (S n1))))
+subgoal 3 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 4 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora aplicamos el constructor Uno_nat.
+
+Ejercicio27 < Apply Uno_nat.
+3 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  ============================
+   (n1:nat)(Natural (pos (pred n1)))->(Natural (pos (pred (S n1))))
+
+subgoal 2 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Hacemos Intros para subir las pruebas.
+
+Ejercicio27 < Intros.
+3 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  n1 : nat
+  H1 : (Natural (pos (pred n1)))
+  ============================
+   (Natural (pos (pred (S n1))))
+
+subgoal 2 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio27 < Simpl.
+3 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  n1 : nat
+  H1 : (Natural (pos (pred n1)))
+  ============================
+   (Natural (pos n1))
+
+subgoal 2 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora hacemos Induction sobre n1.
+
+Ejercicio27 < Induction n1.
+4 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  H1 : (Natural (pos (pred (0))))
+  ============================
+   (Natural (pos (0)))
+
+subgoal 2 is:
+ (Natural (pos (S n1)))
+subgoal 3 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 4 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora usamos el constructor Uno_nat.
+
+Ejercicio27 < Apply Uno_nat.
+3 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  n1 : nat
+  H1 : (Natural (pos (pred (S n1))))
+  Hrecn1 : (Natural (pos (pred n1)))->(Natural (pos n1))
+  ============================
+   (Natural (pos (S n1)))
+
+subgoal 2 is:
+ (Diff (S n0) (0) (pos (pred n0)))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+
+Ahora usamos el constructor N_nat con (pred (S n1)) y H1.
+
+Ejercicio27 < Apply (N_nat (pred (S n1)) H1).
+2 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))}
+  H0 : (le (0) (S n0))
+  ============================
+   (Diff (S n0) (0) (pos (pred n0)))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora hacemos Induction sobre n0.
+
+Ejercicio27 < Induction n0.
+3 subgoals
+
+  n : nat
+  m : nat
+  H : (le (0) (0))->{z:Zr | ((Natural z)/\(Diff (0) (0) z))}
+  H0 : (le (0) (1))
+  ============================
+   (Diff (1) (0) (pos (pred (0))))
+
+subgoal 2 is:
+ (Diff (S (S n0)) (0) (pos (pred (S n0))))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio27 < Simpl.
+3 subgoals
+
+  n : nat
+  m : nat
+  H : (le (0) (0))->{z:Zr | ((Natural z)/\(Diff (0) (0) z))}
+  H0 : (le (0) (1))
+  ============================
+   (Diff (1) (0) (pos (0)))
+
+subgoal 2 is:
+ (Diff (S (S n0)) (0) (pos (pred (S n0))))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora usamos el constructor Diff_n_O con (1) como parametro.
+
+Ejercicio27 < Apply (Diff_n_O (1)).
+2 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) (S n0))->{z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+  H0 : (le (0) (S (S n0)))
+  Hrecn0 : ((le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))})
+           ->(le (0) (S n0))
+           ->(Diff (S n0) (0) (pos (pred n0)))
+  ============================
+   (Diff (S (S n0)) (0) (pos (pred (S n0))))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio27 < Simpl.
+2 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (le (0) (S n0))->{z:Zr | ((Natural z)/\(Diff (S n0) (0) z))}
+  H0 : (le (0) (S (S n0)))
+  Hrecn0 : ((le (0) n0)->{z:Zr | ((Natural z)/\(Diff n0 (0) z))})
+           ->(le (0) (S n0))
+           ->(Diff (S n0) (0) (pos (pred n0)))
+  ============================
+   (Diff (S (S n0)) (0) (pos n0))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(le n0 m)->{z:Zr | ((Natural z)/\(Diff m n0 z))})
+  ->(m:nat)(le (S n0) m)->{z:Zr | ((Natural z)/\(Diff m (S n0) z))}
+
+Ahora hacemos Induction sobre n0.
+
+

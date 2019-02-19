@@ -1,0 +1,67 @@
+Primero vamos a subir un a de tipo nat para luego eliminarlo con Elim. 
+A los dos subojetivos que salen le aplicamos Simpl para simplificarlos y
+por ultimo usamos Trivial para resolver el primero.
+
+max_is_lub < Intro a;Elim a;Simpl;Trivial.
+1 subgoal
+  
+  a : nat
+  ============================
+   (n:nat)
+    ((b,c:nat)(le n c)->(le b c)->(le (max n b) c))
+    ->(b,c:nat)
+       (le (S n) c)
+       ->(le b c)
+       ->(le Cases b of
+               O => (S n)
+             | (S n2) => (S (max n n2))
+             end c)
+
+Ahora hacemos Intros para subir las pruebas. Aplicamos Case sobre b para que 
+nos muestre los casos que tiene b y sobre todos ellos aplicamos Simpl para
+simplificarlos. Por ultimo aplicamos Trivial para resolver el primer objetivo.
+
+max_is_lub < Intros n H b;Case b;Simpl;Trivial.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b,c:nat)(le n c)->(le b c)->(le (max n b) c)
+  b : nat
+  ============================
+   (n0,c:nat)(le (S n) c)->(le (S n0) c)->(le (S (max n n0)) c)
+
+Ahora subimos las pruebas con Intros, aplicamos Case c para que nos deje como
+objetivos demostrar el objetivo para todos los casos de c. Sobre todos los casos
+usamos Simpl para simplificarlos y aplicamos Auto con la libreria arith para que
+resuelva el primer objetivo.
+
+max_is_lub < Intros n0 c;Case c;Simpl;Auto with arith.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b,c:nat)(le n c)->(le b c)->(le (max n b) c)
+  b : nat
+  n0 : nat
+  c : nat
+  ============================
+   (le (S n) (0))->(le (S n0) (0))->(le (S (max n n0)) (0))
+
+Ahora hacemos intro para subir una prueba de (le (S n) (0)), aplicamos Absurd
+sobre (le (S n) O) y sobre los dos objetivos usamos Auto with arith para
+terminar de probar el lema.
+
+max_is_lub < Intro H0;Absurd (le (S n) O);Auto with arith.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+max_is_lub < Defined.
+Intro a; Elim a; Simpl; Trivial.
+Intros n H b; Case b; Simpl; Trivial.
+Intros n0 c; Case c; Simpl; Auto with arith.
+Intro H0; Absurd (le (S n) O); Auto with arith.
+
+max_is_lub is defined
+

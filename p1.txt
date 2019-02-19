@@ -1,0 +1,3486 @@
+PRACTICA DE MD2 REALIZADA POR:
+
+Jesus Angel Perez-Roca Fernandez (infjpf02)
+
+EJERCICIO 1
+
+Coq < Search and.
+conj: (A,B:Prop)A->B->A/\B
+
+
+Coq < Search or.
+or_introl: (A,B:Prop)A->A\/B
+or_intror: (A,B:Prop)B->A\/B
+
+
+Coq < Search eq.
+refl_equal: (A:Set; x:A)x=x
+Logic_lemmas.trans_equal: (A:Set; x,y,z:A)x=y->y=z->x=z
+Logic_lemmas.sym_equal: (A:Set; x,y:A)x=y->y=x
+Logic_lemmas.f_equal: (A,B:Set; f:(A->B); x,y:A)x=y->(f x)=(f y)
+Logic_lemmas.trans_eq: (A:Set; x,y,z:A)x=y->y=z->x=z
+Logic_lemmas.sym_eq: (A:Set; x,y:A)x=y->y=x
+equality.trans_equal: x=y->y=z->x=z
+equality.sym_equal: x=y->y=x
+equality.f_equal: x=y->(f x)=(f y)
+equality.trans_eq: x=y->y=z->x=z
+equality.sym_eq: x=y->y=x
+sym_eq: (A:Set; x,y:A)x=y->y=x
+trans_eq: (A:Set; x,y,z:A)x=y->y=z->x=z
+f_equal: (A,B:Set; f:(A->B); x,y:A)x=y->(f x)=(f y)
+sym_equal: (A:Set; x,y:A)x=y->y=x
+trans_equal: (A:Set; x,y,z:A)x=y->y=z->x=z
+f_equal2:
+  (A1,A2,B:Set; f:(A1->A2->B); x1,y1:A1; x2,y2:A2)
+   x1=y1->x2=y2->(f x1 x2)=(f y1 y2)
+f_equal3:
+  (A1,A2,A3,B:Set; f:(A1->A2->A3->B); x1,y1:A1; x2,y2:A2; x3,y3:A3)
+   x1=y1->x2=y2->x3=y3->(f x1 x2 x3)=(f y1 y2 y3)
+f_equal4:
+  (A1,A2,A3,A4,B:Set; f:(A1->A2->A3->A4->B); x1,y1:A1; x2,y2:A2;
+   x3,y3:A3; x4,y4:A4)
+   x1=y1->x2=y2->x3=y3->x4=y4->(f x1 x2 x3 x4)=(f y1 y2 y3 y4)
+f_equal5:
+  (A1,A2,A3,A4,A5,B:Set; f:(A1->A2->A3->A4->A5->B); x1,y1:A1; x2,y2:A2;
+   x3,y3:A3; x4,y4:A4; x5,y5:A5)
+   x1=y1
+   ->x2=y2
+   ->x3=y3
+   ->x4=y4
+   ->x5=y5
+   ->(f x1 x2 x3 x4 x5)=(f y1 y2 y3 y4 y5)
+eq_S: (x,y:nat)x=y->(S x)=(S y)
+pred_Sn: (m:nat)m=(pred (S m))
+eq_add_S: (n,m:nat)(S n)=(S m)->n=m
+plus_n_O: (n:nat)n=(plus n O)
+plus_n_Sm: (n,m:nat)(S (plus n m))=(plus n (S m))
+mult_n_O: (n:nat)O=(mult n O)
+mult_n_Sm: (n,m:nat)(plus (mult n m) n)=(mult n (S m))
+Well_founded.fix_eq:
+  (P:(A->Set); F:((x:A)((y:A)(R y x)->(P y))->(P x)))
+   ((x:A; f,g:((y:A)(R y x)->(P y)))
+     ((y:A; p:(R y x))(f y p)=(g y p))->(F x f)=(F x g))
+   ->(x:A)
+      (Well_founded.fix Rwf R A P F x)
+       =(F x [y:A; _:(R y x)](Well_founded.fix Rwf R A P F y))
+Well_founded.Fix_F_inv:
+  (P:(A->Set); F:((x:A)((y:A)(R y x)->(P y))->(P x)))
+   ((x:A; f,g:((y:A)(R y x)->(P y)))
+     ((y:A; p:(R y x))(f y p)=(g y p))->(F x f)=(F x g))
+   ->(x:A; r,s:(Well_founded.Acc R A x))
+      (Well_founded.Fix_F R A P F x r)=(Well_founded.Fix_F R A P F x s)
+Well_founded.Fix_F_eq:
+  (P:(A->Set); F:((x:A)((y:A)(R y x)->(P y))->(P x)); x:A;
+   r:(Well_founded.Acc R A x))
+   (F x
+     [y:A; p:(R y x)]
+      (Well_founded.Fix_F R A P F y (Well_founded.Acc_inv R A x r y p)))
+    =(Well_founded.Fix_F R A P F x r)
+FixPoint.fix_eq:
+  (x:A)
+   (FixPoint.fix F P Rwf R A x)
+    =(F x [y:A; _:(R y x)](FixPoint.fix F P Rwf R A y))
+FixPoint.Fix_F_inv:
+  (x:A; r,s:(Well_founded.Acc R A x))
+   (FixPoint.Fix_F F P R A x r)=(FixPoint.Fix_F F P R A x s)
+FixPoint.Fix_F_eq:
+  (x:A; r:(Well_founded.Acc R A x))
+   (F x
+     [y:A; p:(R y x)]
+
+Coq < Search le.
+le_n: (n:nat)(le n n)
+le_S: (n,m:nat)(le n m)->(le n (S m))
+
+
+Con el comando Search se imprimen los tipos de las declaraciones que tengan como cabeza 
+de ese tipo el nombre que se le pasa como parametro.
+
+
+EJERCICIO 2
+
+Coq < Print nat.
+Inductive nat  : Set :=  O : nat | S : nat->nat
+
+
+Coq < Print le.
+Inductive le [n : nat]  : nat->Prop :=
+      le_n : (le n n) | le_S : (m:nat)(le n m)->(le n (S m))
+
+
+Coq < Print lt.
+lt = [n,m:nat](le (S n) m)
+     : nat->nat->Prop
+
+
+Coq < Print eq_S.
+eq_S = (f_equal nat nat S)
+     : (x,y:nat)x=y->(S x)=(S y)
+
+
+Coq < Print f_equal.
+f_equal =
+[A,B:Set; f:(A->B); x,y:A; H:(x=y)]
+ (eq_ind A x [a:A](f x)=(f a) (refl_equal B (f x)) y H)
+     : (A,B:Set; f:(A->B); x,y:A)x=y->(f x)=(f y)
+
+
+Con el comando Print se imprime el cuerpo de la constante de ese nombre y su tipo.
+
+
+EJERCICIO 3
+
+Coq < Check nat_case.
+nat_case
+     : (n:nat; P:(nat->Prop))(P O)->((m:nat)(P (S m)))->(P n)
+
+
+El lema prueba que si se tiene una prueba de que una propiedad es cierta par el cero 
+y se tiene una prueba de que para todo m de tipo nat la propiedad es cierta para el siguiente de ese m,
+entonces la propiedad P es cierta para todo n de tipo nat.
+
+
+EJERCICIO 4
+
+Coq < Check (plus O (S O)).
+(plus O (S O))
+     : nat
+
+
+Coq < Check (plus true false).
+Toplevel input, characters 12-16
+> Check (plus true false).
+>             ^^^^
+Error: The term true has type bool while it is expected to have type
+ nat
+
+
+El primer termino si que esta bien formado, pero el segundo da un error ya que la funcion plus
+espera dos argumentos de tipo nat, y los terminos true y false son de tipo bool.
+
+
+EJERCICIO 5
+
+Coq < Require Arith.
+
+
+Coq < Search le.
+Between.nth_le: (init,l,n:nat)(Between.nth Q P init l n)->(le init l)
+Between.exists_S_le: (k,l:nat)(Between.exists Q k (S l))->(le k l)
+Between.exists_le_S: (k,l:nat)(Between.exists Q k l)->(le (S k) l)
+Between.between_le: (k,l:nat)(Between.between P k l)->(le k l)
+between_le: (P:(nat->Prop); k,l:nat)(between P k l)->(le k l)
+exists_le_S: (Q:(nat->Prop); k,l:nat)(exists Q k l)->(le (S k) l)
+exists_S_le: (Q:(nat->Prop); k,l:nat)(exists Q k (S l))->(le k l)
+nth_le: (P,Q:(nat->Prop); init,l,n:nat)(nth P Q init l n)->(le init l)
+gt_S_le: (n,p:nat)(gt (S p) n)->(le n p)
+gt_le_S: (n,p:nat)(gt p n)->(le (S n) p)
+le_n_S: (n,m:nat)(le n m)->(le (S n) (S m))
+le_trans: (n,m,p:nat)(le n m)->(le m p)->(le n p)
+le_n_Sn: (n:nat)(le n (S n))
+le_O_n: (n:nat)(le (0) n)
+le_pred_n: (n:nat)(le (pred n) n)
+le_trans_S: (n,m:nat)(le (S n) m)->(le n m)
+le_S_n: (n,m:nat)(le (S n) (S m))->(le n m)
+lt_le_S: (n,p:nat)(lt n p)->(le (S n) p)
+lt_n_Sm_le: (n,m:nat)(lt n (S m))->(le n m)
+lt_le_weak: (n,m:nat)(lt n m)->(le n m)
+mult_le: (m,n,p:nat)(le n p)->(le (mult m n) (mult m p))
+mult_le_conv_1: (m,n,p:nat)(le (mult (S m) n) (mult (S m) p))->(le n p)
+le_n: (n:nat)(le n n)
+le_S: (n,m:nat)(le n m)->(le n (S m))
+simpl_le_plus_l: (p,n,m:nat)(le (plus p n) (plus p m))->(le n m)
+le_reg_l: (n,m,p:nat)(le n m)->(le (plus p n) (plus p m))
+le_reg_r: (a,b,c:nat)(le a b)->(le (plus a c) (plus b c))
+le_plus_plus:
+  (n,m,p,q:nat)(le n m)->(le p q)->(le (plus n p) (plus m q))
+le_plus_l: (n,m:nat)(le n (plus n m))
+le_plus_r: (n,m:nat)(le m (plus n m))
+le_plus_trans: (n,m,p:nat)(le n m)->(le n (plus m p))
+
+
+Al cargar el modula Arith y volver a buscar le, salen mas propiedades, 
+ya que salen las anteriores y las que contiene el modulo Arith.
+
+
+EJERCICIO 6
+
+Coq < Inductive Zr : Set := cero : Zr | pos : nat->Zr | neg : nat->Zr.
+Zr is defined
+Zr_ind is defined
+Zr_rec is defined
+Zr_rect is defined
+
+
+Se construye el tipo inductivo Zr por medio de tres constructores: uno para el cero, 
+otro para los positivos que necesita un termino de tipo nat y otro para los negativos
+que tambien necesita un parametro de tipo nat.
+
+
+Definition Z_a_Zr:Z->Zr:= [z:Z] Cases z of ZERO=>cero |(POS p)=>(pos(pred(convert p))) |(NEG p)=>(neg(pred(convert p))) end.
+
+La funcion para pasar de un elemento de Z a uno del nuevo tipo Zr se hace usando las 
+funciones predefinidas para conseguir el predecesor de un elemento de tipo nat (pred) y la
+funcion que convierte un elemento de tipo positive a otro de tipo nat (convert).
+ 
+Definition Zr_a_Z :Zr->Z:= [z:Zr] Cases z of cero=>ZERO |(pos n)=>(POS(anti_convert n)) |(neg n)=>(NEG(anti_convert n)) end.
+
+
+La funcion para pasar de un elemento del nuevo tipo Zr a uno de tipo Z se hace usando 
+la funcion que convierte un elemento de tipo nat a otro de tipo positive (anti_convert).
+
+
+EJERCICIO 7
+
+Coq < Inductive tree012 : Set := c0 :tree012 | c1 : tree012->tree012 | c2 : tree012->tree012->tree012.
+tree012 is defined
+tree012_ind is defined
+tree012_rec is defined
+tree012_rect is defined
+
+
+Coq < Inductive tree12: Set := c1' : tree12->tree12 | c2' : tree12->tree12->tree12.
+tree12 is defined
+tree12_ind is defined
+tree12_rec is defined
+tree12_rect is defined
+
+
+El primer tipo sirve para construir nodos de cero ramas (con el primer constructor), de una rama (con el segundo)
+y de dos ramas (con el trecero). A partir de ahi se irian añadiendo nodos a ese nodo inicial con el segundo y 
+tercer constructor para conseguir el arbol deseado.
+En cuanto al segundo, no se podrian hacer nodos de cero ramas, solo de dos o tres ramas, ya que los dos 
+contructores necesitan por lo menos un parametro.
+
+
+EJERCICIO 8
+
+Coq < Inductive LE : nat->nat->Prop := LE_O : (n:nat) (LE O n) | LE_S : (n,m:nat) (LE n m)->(LE (S n) (S m)).
+LE is defined
+LE_ind is defined
+
+Coq < Lemma Ejercicio8:(n,m:nat) (LE n m)<->(le n m).
+1 subgoal
+
+  ============================
+   (n,m:nat)(LE n m)<->(le n m)
+
+Primero hacemos Intros para subir las pruebas.
+
+Ejercicio8 < Intros.
+1 subgoal
+
+  n : nat
+  m : nat
+  ============================
+   (LE n m)<->(le n m)
+
+Ahora hacemos Split para que nos divida la doble implicacion en dos implicaciones.
+
+Ejercicio8 < Split.
+2 subgoals
+
+  n : nat
+  m : nat
+  ============================
+   (LE n m)->(le n m)
+
+subgoal 2 is:
+ (le n m)->(LE n m)
+
+Ahora hacemos Induction sobre n, con lo que nos quedara por probar el objetivo
+cuando n es O y cuando es el sucesor de otro natural.
+
+Ejercicio8 < Induction n.
+3 subgoals
+
+  m : nat
+  ============================
+   (LE (0) m)->(le (0) m)
+
+subgoal 2 is:
+ (LE (S n) m)->(le (S n) m)
+subgoal 3 is:
+ (le n m)->(LE n m)
+
+Hacemos Intro para subir una prueba de (LE (0) m).
+
+Ejercicio8 < Intro.
+3 subgoals
+
+  m : nat
+  H : (LE (0) m)
+  ============================
+   (le (0) m)
+
+subgoal 2 is:
+ (LE (S n) m)->(le (S n) m)
+subgoal 3 is:
+ (le n m)->(LE n m)
+
+Ahora aplicamos la propiedad le_O_n con m como parametro y obtenemos el objetivo.
+
+Ejercicio8 < Apply (le_O_n m).
+2 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  ============================
+   (LE (S n) m)->(le (S n) m)
+
+subgoal 2 is:
+ (le n m)->(LE n m)
+
+Ahora hacemos Intro para subir una prueba de (LE (S n) m).
+
+Ejercicio8 < Intro.
+2 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  ============================
+   (le (S n) m)
+
+subgoal 2 is:
+ (le n m)->(LE n m)
+
+Eliminamos H con la tactica Elim.
+
+Ejercicio8 < Elim H.
+3 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  ============================
+   (n0:nat)(le (0) n0)
+
+subgoal 2 is:
+ (n0,m0:nat)(LE n0 m0)->(le n0 m0)->(le (S n0) (S m0))
+subgoal 3 is:
+ (le n m)->(LE n m)
+
+Ahora hacemos Intro para subir la n0 de tipo nat.
+
+Ejercicio8 < Intro.
+3 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  n0 : nat
+  ============================
+   (le (0) n0)
+
+subgoal 2 is:
+ (n0,m0:nat)(LE n0 m0)->(le n0 m0)->(le (S n0) (S m0))
+subgoal 3 is:
+ (le n m)->(LE n m)
+
+Usamos la propiedad le_O_n con el parametro n0 y asi obtenemos el objetivo.
+
+Ejercicio8 < Apply (le_O_n n0).
+2 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  ============================
+   (n0,m0:nat)(LE n0 m0)->(le n0 m0)->(le (S n0) (S m0))
+
+subgoal 2 is:
+ (le n m)->(LE n m)
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio8 < Intros.
+2 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  n0 : nat
+  m0 : nat
+  H0 : (LE n0 m0)
+  H1 : (le n0 m0)
+  ============================
+   (le (S n0) (S m0))
+
+subgoal 2 is:
+ (le n m)->(LE n m)
+
+Eliminamos H0 con la tactica Elim.
+
+Ejercicio8 < Elim H0.
+3 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  n0 : nat
+  m0 : nat
+  H0 : (LE n0 m0)
+  H1 : (le n0 m0)
+  ============================
+   (n1:nat)(le (1) (S n1))
+
+subgoal 2 is:
+ (n1,m1:nat)(LE n1 m1)->(le (S n1) (S m1))->(le (S (S n1)) (S (S m1)))
+subgoal 3 is:
+ (le n m)->(LE n m)
+
+Ahora hacemos Intro para subir n1 de tipo nat.
+
+Ejercicio8 < Intro.
+3 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  n0 : nat
+  m0 : nat
+  H0 : (LE n0 m0)
+  H1 : (le n0 m0)
+  n1 : nat
+  ============================
+   (le (1) (S n1))
+
+subgoal 2 is:
+ (n1,m1:nat)(LE n1 m1)->(le (S n1) (S m1))->(le (S (S n1)) (S (S m1)))
+subgoal 3 is:
+ (le n m)->(LE n m)
+
+Ahora usamos dos propiedades de le: la propiedad le_O_n con el parametro n1 para
+construir una prueba de que O es menor o igual que n1, y con esa prueba, mediante
+la propiedad le_n_S con los parametros cero, n1 y la prueba que construimos
+anteriormente conseguimos probar el objetivo.
+
+Ejercicio8 < Apply (le_n_S O n1 (le_O_n n1)).
+2 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  n0 : nat
+  m0 : nat
+  H0 : (LE n0 m0)
+  H1 : (le n0 m0)
+  ============================
+   (n1,m1:nat)
+    (LE n1 m1)->(le (S n1) (S m1))->(le (S (S n1)) (S (S m1)))
+
+subgoal 2 is:
+ (le n m)->(LE n m)
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio8 < Intros.
+2 subgoals
+
+  n : nat
+  m : nat
+  Hrecn : (LE n m)->(le n m)
+  H : (LE (S n) m)
+  n0 : nat
+  m0 : nat
+  H0 : (LE n0 m0)
+  H1 : (le n0 m0)
+  n1 : nat
+  m1 : nat
+  H2 : (LE n1 m1)
+  H3 : (le (S n1) (S m1))
+  ============================
+   (le (S (S n1)) (S (S m1)))
+
+subgoal 2 is:
+ (le n m)->(LE n m)
+
+Ahora usamos la propiedad le_n_S con los parametros (S n1), (S m1) y H3, que
+es una prueba de que (S n1) es menor o igual que (S m1).
+
+Ejercicio8 < Apply (le_n_S (S n1) (S m1) H3).
+1 subgoal
+
+  n : nat
+  m : nat
+  ============================
+   (le n m)->(LE n m)
+
+Ahora nos queda como objetivo la otra parte de la doble implicacion.
+Primero hacemos Intro para obtener una prueba de (le n m).
+
+Ejercicio8 < Intro.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (le n m)
+  ============================
+   (LE n m)
+
+Ahora hacemos Induction sobre n y nos quedan dos objetivos: demostrar el
+objetivo cuando n es cero y cuando es el sucesor de otro natural.
+
+Ejercicio8 < Induction n.
+2 subgoals
+
+  m : nat
+  H : (le (0) m)
+  ============================
+   (LE (0) m)
+
+subgoal 2 is:
+ (LE (S n) m)
+
+Ahora usamos el primer constructor de LE pasandole como parametro m.
+
+Ejercicio8 < Apply (LE_O m).
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  ============================
+   (LE (S n) m)
+
+Eliminamos H con la tactica Elim.
+
+Ejercicio8 < Elim H.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  ============================
+   (LE (S n) (S n))
+
+subgoal 2 is:
+ (m0:nat)(le (S n) m0)->(LE (S n) m0)->(LE (S n) (S m0))
+
+Ahora usamos Constructor para simplificar el objetivo.
+
+Ejercicio8 < Constructor.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  ============================
+   (LE n n)
+
+subgoal 2 is:
+ (m0:nat)(le (S n) m0)->(LE (S n) m0)->(LE (S n) (S m0))
+
+Eliminamos n con la tactica Elim y nos divide el objetivo en dos, los cuales
+se resuelven usando los constructores del tipo LE.
+
+Ejercicio8 < Elim n.
+3 subgoals
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  ============================
+   (LE (0) (0))
+
+subgoal 2 is:
+ (n0:nat)(LE n0 n0)->(LE (S n0) (S n0))
+subgoal 3 is:
+ (m0:nat)(le (S n) m0)->(LE (S n) m0)->(LE (S n) (S m0))
+
+Usamos el primer constructor de LE pasandole como parametro el cero.
+
+Ejercicio8 < Apply (LE_O O).
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  ============================
+   (n0:nat)(LE n0 n0)->(LE (S n0) (S n0))
+
+subgoal 2 is:
+ (m0:nat)(le (S n) m0)->(LE (S n) m0)->(LE (S n) (S m0))
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio8 < Intros.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  n0 : nat
+  H0 : (LE n0 n0)
+  ============================
+   (LE (S n0) (S n0))
+
+subgoal 2 is:
+ (m0:nat)(le (S n) m0)->(LE (S n) m0)->(LE (S n) (S m0))
+
+Ahora usamos el segundo constructor de LE pasandole como parametros n0, n0 y H0.
+
+Ejercicio8 < Apply (LE_S n0 n0 H0).
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  ============================
+   (m0:nat)(le (S n) m0)->(LE (S n) m0)->(LE (S n) (S m0))
+
+Utilizamos Intros para subir las pruebas.
+
+Ejercicio8 < Intros.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  m0 : nat
+  H0 : (le (S n) m0)
+  H1 : (LE (S n) m0)
+  ============================
+   (LE (S n) (S m0))
+
+Ahora eliminamos H1 con la tactica Elim.
+
+Ejercicio8 < Elim H1.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  m0 : nat
+  H0 : (le (S n) m0)
+  H1 : (LE (S n) m0)
+  ============================
+   (n0:nat)(LE (0) (S n0))
+
+subgoal 2 is:
+ (n0,m1:nat)(LE n0 m1)->(LE n0 (S m1))->(LE (S n0) (S (S m1)))
+
+Ahora hacemos Intro para subir la n0 de tipo nat.
+
+Ejercicio8 < Intro.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  m0 : nat
+  H0 : (le (S n) m0)
+  H1 : (LE (S n) m0)
+  n0 : nat
+  ============================
+   (LE (0) (S n0))
+
+subgoal 2 is:
+ (n0,m1:nat)(LE n0 m1)->(LE n0 (S m1))->(LE (S n0) (S (S m1)))
+
+Ahora usamos el primer constructor pasandole como parametro (S n0).
+
+Ejercicio8 < Apply (LE_O (S n0)).
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  m0 : nat
+  H0 : (le (S n) m0)
+  H1 : (LE (S n) m0)
+  ============================
+   (n0,m1:nat)(LE n0 m1)->(LE n0 (S m1))->(LE (S n0) (S (S m1)))
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio8 < Intros.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (le (S n) m)
+  Hrecn : (le n m)->(LE n m)
+  m0 : nat
+  H0 : (le (S n) m0)
+  H1 : (LE (S n) m0)
+  n0 : nat
+  m1 : nat
+  H2 : (LE n0 m1)
+  H3 : (LE n0 (S m1))
+  ============================
+   (LE (S n0) (S (S m1)))
+
+Ahora usamos el segundo constructor pasandole como parametros n0, (S m1) y H3,
+que es una prueba de (LE n0 (S m1)) y ya queda probada la doble implicacion.
+
+Ejercicio8 < Apply (LE_S n0 (S m1) H3).
+Subtree proved!
+
+Ahora solo queda guardarla con Defined para que se guarde de modo transparente.
+
+Ejercicio8 < Defined.
+Intros.
+Split.
+Induction n.
+Intro.
+Apply (le_O_n m).
+
+Intro.
+Elim H.
+Intro.
+Apply (le_O_n n0).
+
+Intros.
+Elim H0.
+Intro.
+Apply (le_n_S O n1 (le_O_n n1)).
+Intros.
+Apply (le_n_S (S n1) (S m1) H3).
+
+Intro.
+Induction n.
+Apply (LE_O m).
+
+Elim H.
+Constructor.
+Elim n.
+Apply (LE_O O).
+
+Intros.
+Apply (LE_S n0 n0 H0).
+
+Intros.
+Elim H1.
+Intro.
+Apply (LE_O (S n0)).
+
+Intros.
+Apply (LE_S n0 (S m1) H3).
+
+Ejercicio8 is defined
+
+
+EJERCICIO 9
+
+Coq < Inductive Natural : Zr->Prop := Cero_nat : (Natural cero) | Uno_nat : (Natural (pos O)) | N_nat : (n:nat) (Natural (pos n))->(Natural (pos (S n))).
+Natural is defined
+Natural_ind is defined
+
+El predicado natural se define con tres constructores: uno para decir que el cero es natural, 
+otro para decir que el uno es atural y otro para decir que si un numero es natural el sguiente a ese numero tambien lo es.
+
+
+EJERCICIO 10
+
+Coq < Inductive Diff : nat->nat->Zr->Prop := Diff_n : (n:nat) (Diff n n cero) | Diff_n_O : (n:nat) (Diff n O (pos (pred n))) | Diff_O_n : (n:nat) (Diff O n (neg (pred n))) | Diff_S : (n,m:nat) (z:Zr) (Diff n m z)->(Diff (S n) (S m) z).
+Diff is defined
+Diff_ind is defined
+
+
+Para definir este predicado se usan cuatro constructores: uno para cuando los dos numeros son iguales (resultado cero),
+otro para cuando el segundo el cero (resultado positivo) , otro para cuando el primero es cero (resultado negativo)
+y otro para el resto (se calcula el resutado sabiendo que la diferencia entre dos numeros es igual a la diferencia
+entre sus respectivos sucesores).
+
+
+EJERCICIO 11
+
+Inductive SubZ : Zr->Zr->Zr->Prop := 
+SubZ_z : (z:Zr) (SubZ z z cero) 
+| SubZ_z_cero : (z:Zr) (SubZ z cero z) 
+| SubZ_cero_pos : (n:nat) (SubZ cero (pos n) (neg n)) 
+| SubZ_cero_neg : (n:nat) (SubZ cero (neg n) (pos n)) 
+| SubZ_pos:(n,m:nat) (z:Zr) (SubZ (pos (S n)) (pos (S m)) z)->(SubZ (pos n) (pos m) z)
+| SubZ_neg:(n,m:nat) (z:Zr) (SubZ (neg (S n)) (neg (S m)) z)->(SubZ (neg n) (neg m) z)
+| SubZ_pos_neg:(n,m:nat) (z:Zr) (SubZ (pos (S n)) (neg m) z)->(SubZ (pos n) (neg (S m)) z)
+| SubZ_neg_pos:(n,m:nat) (z:Zr) (SubZ (neg (S n)) (pos m) z)->(SubZ (neg n) (pos (S m)) z). 
+
+El tipo SubZ se puede construir con ocho constructores dependiendo de los dos primeros numeros:
+uno para cuando son dos numeros iguales, otro para cuando el segundo es el cero, 
+otro para cuando el primero es el cero y el segundo es positivo, otro para cuando el primero
+es el cero y el segundo es negativo, otro para cuando los dos son positivos, otro para cuando
+los dos son negativos, otro para cuando el primero es positivo y el segundo es negativo, y otro
+para cuando el primero es negativo y el segundo positivo.
+
+
+EJERCICIO 12
+
+Coq < Definition Predecesor : nat->nat := [x:nat]Cases x of O => O | (S x) => x end.
+Predecesor is defined
+
+
+Coq < Definition Es_cero : nat->bool := [x:nat]Cases x of O => true | _ => false end.
+Es_cero is defined
+
+
+La funcion Predecesor se define por casos de la siguiente forma: si es cero su predecesor es cero y si es el sucesor
+de un numero, entoces el predecesor es dicho numero.
+La funcion Es_cero se define por casos de la siguiente forma: si es cero entonces devuelve true y sino devuelve false.
+
+
+EJERCICIO 13
+
+Coq < Section Ejercicio13.
+
+
+Coq < Variables A:Set;P:A->Set.
+A is assumed
+P is assumed
+
+
+Coq < Inductive suma : Set := intro: (x:A) (P x) -> suma.
+suma is defined
+suma_ind is defined
+suma_rec is defined
+suma_rect is defined
+
+
+Coq < Definition p1 : suma -> A := [s:suma] Cases s of (intro x _) => x end.
+p1 is defined
+
+
+Coq < Definition p2 : (s:suma) (P (p1 s)) := [s:suma] <[t:suma](P (p1 t))>Cases s of (intro x p) => p end.
+p2 is defined
+
+
+Coq < End Ejercicio13.
+suma is discharged.
+suma_ind is discharged.
+suma_rec is discharged.
+suma_rect is discharged.
+p1 is discharged.
+p2 is discharged.
+
+
+Para hacer este ejercicio se define primero una seccion para no tener que ir poniendo el tipo de las variables.
+Primero se define la funcion suma dependiente que tiene un constructor que para todo x de tipo A si se cumple (P x)
+devuelve algo de tipo suma.
+Despues se define la proyeccion 1 por casos de la siguiente forma: solo tiene un caso, es decir,
+si es intro de un x y cualquier cosa, entonces devuelve ese x.
+Por ultimo, antes de cerrar la seccion, se define la proyeccion 2 por casos, pero esta vez hay que decirle
+que tipo se espera que tenga el resultado porque el programa no lo puede inferir por si mismo.
+
+
+EJERCICIO 14
+
+Coq < Definition Or : bool->bool->bool := [x,y:bool] Cases x of true => true | false => y end.
+Or is defined
+
+
+La funcion Or se define por casos de la siguiente forma: si el primero es true entonces true y sino se devuelve el segundo.
+
+
+EJERCICIO 15
+
+Coq < Definition Opuesto : Zr->Zr := [z:Zr] Cases z of cero => cero | (pos n) => (neg n) | (neg n) => (pos n) end.
+Opuesto is defined
+
+
+La funcion Opuesto se define por casos de la siguiente forma: si es cero entonces su opuesto es cero,
+si es positivo su opuesto es negativo y si es negativo su opuesto es positivo.
+
+
+EJERCICIO 16
+
+Coq < Definition Nat_Zr : nat->Zr := [n:nat] Cases n of O => cero | (S n) => (pos n) end.
+Nat_Zr is defined
+
+
+Para definir una funcion de nat a Zr que conserve la semantica se define por casos de la siguiente forma:
+si es cero entonces cero y si es el siguiente de un numero entonces es el positivo que se obtiene
+al pasarle dicho numero al constructor pos.
+
+
+EJERCICIO 17
+
+Coq < Fixpoint diff [n:nat] : nat->Zr := [m:nat] Cases n m of O O => cero | O (S n) => (neg n) | (S n) O => (pos n) | (S n) (S m) => (diff n m) end.
+diff is recursively defined
+
+
+Para calcular la diferencia entre dos naturales se usan los siguientes casos: si los dos son cero entonces
+la diferencia es cero, si el primero es cero entonces la diferencia es negativa, si el segundo es cero
+entonces la diferencia es positiva y si los dos son distintos de cero se calcula sabiendo que la diferencia
+entre los sucesores de dos numeros naturales es igual a la diferencia entre dichos numeros.
+
+
+EJERCICIO 18
+
+Coq < Definition Suma :Zr->Zr->Zr := [x,y:Zr] Cases x y of cero y => y | x cero =>x | (pos n) (pos m) => (pos (plus n m)) | (neg n) (neg m) => (neg (plus n m)) | (pos n) (neg m) => (diff n m) | (neg m) (pos n) => (diff n m) end.
+Suma is defined
+
+
+Para definir la funcion Suma se hace por casos de la siguiente forma: si el primero es cero entonces
+el resultado es el segundo, si el segundo es cero entonces el resultado es el primero, si los dos son
+positivos el resultado de la suma es positivo, si los dos son negativos el resultado tambien lo es,
+y si son uno positivo y el otro negativo se usa la funcion diff previamente definida.
+
+
+EJERCICIO 20
+
+1)
+
+Primero probamos la primera tautologia.
+
+Coq < Lemma distr : (A,B,C:Prop) A/\(B\/C)->(A/\B)\/(A/\C).
+1 subgoal
+  
+  ============================
+   (A,B,C:Prop)A/\(B\/C)->A/\B\/A/\C
+
+Primero hacemos Intros para subir las pruebas.
+
+distr < Intros.
+1 subgoal
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A/\(B\/C)
+  ============================
+   A/\B\/A/\C
+
+Ahora hacemos Induction sobre H.
+
+distr < Induction H.
+1 subgoal
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  ============================
+   A/\B\/A/\C
+
+Ahora eliminamos H0 con la tactica Elim.
+
+distr < Elim H0.
+2 subgoals
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  ============================
+   B->A/\B\/A/\C
+
+subgoal 2 is:
+ C->A/\B\/A/\C
+
+Ahora hacemos Intro para subir una prueba de B.
+
+distr < Intro.
+2 subgoals
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : B
+  ============================
+   A/\B\/A/\C
+
+subgoal 2 is:
+ C->A/\B\/A/\C
+
+Ahora hacemos Left para quedarnos con la parte izquierda del OR.
+
+distr < Left.
+2 subgoals
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : B
+  ============================
+   A/\B
+
+subgoal 2 is:
+ C->A/\B\/A/\C
+
+Ahora hacemos Split para separar el AND.
+
+distr < Split.
+3 subgoals
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : B
+  ============================
+   A
+
+subgoal 2 is:
+ B
+subgoal 3 is:
+ C->A/\B\/A/\C
+
+El objetivo es trivial, asi que usamos Trivial.
+
+distr < Trivial.
+2 subgoals
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : B
+  ============================
+   B
+
+subgoal 2 is:
+ C->A/\B\/A/\C
+
+Este objetivo tambien es trivial, por lo que hacemos Trivial.
+
+distr < Trivial.
+1 subgoal
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  ============================
+   C->A/\B\/A/\C
+
+Ahora hacemos Intro para subir una prueba de C.
+
+distr < Intro.
+1 subgoal
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : C
+  ============================
+   A/\B\/A/\C
+
+Ahora hacemos Right para quedarnos con la parte derecha del OR, que es la que tiena a A y a C.
+
+distr < Right.
+1 subgoal
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : C
+  ============================
+   A/\C
+
+Ahora hacemos Split para separar el AND y nos quedan dos objetivo triviales.
+
+distr < Split.
+2 subgoals
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : C
+  ============================
+   A
+
+subgoal 2 is:
+ C
+
+El objetivo es trivial, por lo que usamos Trivial.
+
+distr < Trivial.
+1 subgoal
+  
+  A : Prop
+  B : Prop
+  C : Prop
+  H : A
+  H0 : B\/C
+  H1 : C
+  ============================
+   C
+
+Ahora si hacemos Trivial ya queda probado el lema.
+
+distr < Trivial.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+distr < Defined.
+Intros.
+Induction H.
+Elim H0.
+Intro.
+Left.
+Split.
+Trivial.
+
+Trivial.
+
+Intro.
+Right.
+Split.
+Trivial.
+
+Trivial.
+
+distr is defined
+
+
+2)
+
+Ahora pasamos a probar la segunda tautologia.  
+
+Coq < Lemma neg3: (A:Prop) ~~~A->~A.
+1 subgoal
+  
+  ============================
+   (A:Prop)~~~A->~A
+
+Primero hacemos Intros para subir las pruebas.
+
+neg3 < Intros.
+1 subgoal
+  
+  A : Prop
+  H : ~~~A
+  ============================
+   ~A
+
+Ahora reducimos el objetivo con la tactica Red.
+
+neg3 < Red.
+1 subgoal
+  
+  A : Prop
+  H : ~~~A
+  ============================
+   A->False
+
+Ahora hacemos Intro para subir una prueba de A.
+
+neg3 < Intro.
+1 subgoal
+  
+  A : Prop
+  H : ~~~A
+  H0 : A
+  ============================
+   False
+
+Ahora eliminamos H con la tactica Elim.
+
+neg3 < Elim H.
+1 subgoal
+  
+  A : Prop
+  H : ~~~A
+  H0 : A
+  ============================
+   ~~A
+
+Ahora volvemos a reducir el objetivo con Red.
+
+neg3 < Red.
+1 subgoal
+  
+  A : Prop
+  H : ~~~A
+  H0 : A
+  ============================
+   ~A->False
+
+Hacemos Intro para subir una prueba de ~~A.
+
+neg3 < Intro.
+1 subgoal
+  
+  A : Prop
+  H : ~~~A
+  H0 : A
+  H1 : ~A
+  ============================
+   False
+
+Ahora usamos la tactica Absurd para demostrar False.
+
+neg3 < Absurd A.
+2 subgoals
+  
+  A : Prop
+  H : ~~~A
+  H0 : A
+  H1 : ~A
+  ============================
+   ~A
+
+subgoal 2 is:
+ A
+
+El objetivo es trivial, ya que tenemos una prueba de el, asi que usamos Trivial.
+
+neg3 < Trivial.
+1 subgoal
+  
+  A : Prop
+  H : ~~~A
+  H0 : A
+  H1 : ~A
+  ============================
+   A
+
+Ahora si utilizamos Trivial ya nos queda probada la tautologia.
+
+neg3 < Trivial.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+neg3 < Defined.
+Intros.
+Red.
+Intro.
+Elim H.
+Red.
+Intro.
+Absurd A.
+Trivial.
+
+Trivial.
+
+neg3 is defined
+
+
+EJERCICIO 21
+
+Primero definimos una seccion.
+
+Coq < Section induccion1.
+
+Ahora definimos las variables.
+
+Coq < Variables C:Prop;c:C;H:nat->C->C.
+C is assumed
+c is assumed
+H is assumed
+
+Ahora definimos nuestra funcion natind.
+
+Coq < Fixpoint natind [n:nat] : C := Cases n of O => c | (S p) => (H p (natind p)) end.
+natind is recursively defined
+
+Y ahora ponemos el lema que queremos probar.
+
+Coq < Lemma equiv1 : (n:nat) (nat_ind [x:nat] C c H n)==(natind n).
+1 subgoal
+
+  C : Prop
+  c : C
+  H : nat->C->C
+  ============================
+   (n:nat)(nat_ind [_:nat]C c H n)==(natind n)
+
+Empezamos haciendo Intro para subir una prueba de tipo nat.
+
+equiv1 < Intro.
+1 subgoal
+
+  C : Prop
+  c : C
+  H : nat->C->C
+  n : nat
+  ============================
+   (nat_ind [_:nat]C c H n)==(natind n)
+
+Ahora hacemos Induction sobre n, con lo que nos quedaran dos objetivos:
+el primero para cuando n es O y el segundo par cuando es el sucesor de un n.
+
+equiv1 < Induction n.
+2 subgoals
+
+  C : Prop
+  c : C
+  H : nat->C->C
+  ============================
+   (nat_ind [_:nat]C c H (0))==(natind (0))
+
+subgoal 2 is:
+ (nat_ind [_:nat]C c H (S n))==(natind (S n))
+
+Ahora simplificamos el objetivo con Simpl.
+
+equiv1 < Simpl.
+2 subgoals
+
+  C : Prop
+  c : C
+  H : nat->C->C
+  ============================
+   c==c
+
+subgoal 2 is:
+ (nat_ind [_:nat]C c H (S n))==(natind (S n))
+
+El objetivo que nos queda es trivial, asi que usamos Trivial.
+
+equiv1 < Trivial.
+1 subgoal
+
+  C : Prop
+  c : C
+  H : nat->C->C
+  n : nat
+  Hrecn : (nat_ind [_:nat]C c H n)==(natind n)
+  ============================
+   (nat_ind [_:nat]C c H (S n))==(natind (S n))
+
+Simplificamos el objetivo con Simpl.
+
+equiv1 < Simpl.
+1 subgoal
+
+  C : Prop
+  c : C
+  H : nat->C->C
+  n : nat
+  Hrecn : (nat_ind [_:nat]C c H n)==(natind n)
+  ============================
+   (H n (nat_ind [_:nat]C c H n))==(H n (natind n))
+
+Vemos que en el objetivo tenemos una igualdad que se podria simplificar
+si usamos lo que nos dice la prueba Hrecn, asi que usamos Rewrite Hrecn.
+
+equiv1 < Rewrite Hrecn.
+1 subgoal
+
+  C : Prop
+  c : C
+  H : nat->C->C
+  n : nat
+  Hrecn : (nat_ind [_:nat]C c H n)==(natind n)
+  ============================
+   (H n (natind n))==(H n (natind n))
+
+Ahora lo que nos queda es trivial, asi que usamos Trivial y ya nos queda probado.
+
+equiv1 < Trivial.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+equiv1 < Defined.
+Intro.
+Induction n.
+Simpl.
+Trivial.
+
+Simpl.
+Rewrite Hrecn.
+Trivial.
+
+equiv1 is defined
+
+
+Por ultimo cerramos la seccion.
+
+Coq < End induccion1.
+natind is discharged.
+equiv1 is discharged.
+
+
+EJERCICIO 22
+
+Primero declaramos una seccion.
+
+Coq < Section induction2.
+
+Ahora declaramos las variables.
+
+Coq < Variables P:nat->Prop;c:(P O);H:(n:nat)(P n)->(P (S n)).
+P is assumed
+c is assumed
+H is assumed
+
+Y ahora declaramos nuestra funcion natindd.
+
+Coq < Fixpoint natindd [n:nat]: (P n) := <P> Cases n of O => c | (S p) => (H p (natindd p)) end.
+natindd is recursively defined
+
+Ahora cerramos la seccion.
+
+Coq < End induction2.
+natindd is discharged.
+
+Como cerramos la seccion ahora al poner el lema hay que decir los tipos de las
+variables que usamos.
+
+Coq < Lemma equiv2 : (P:nat->Prop;c:(P O);H:(n:nat)(P n)->(P (S n));n:nat) (nat_ind P c H n)==(natindd P c H n).
+1 subgoal
+
+  ============================
+   (P:(nat->Prop); c:(P (0)); H:((n:nat)(P n)->(P (S n))); n:nat)
+    (nat_ind P c H n)==(natindd P c H n)
+
+Primero hacemos Intros para subir las pruebas.
+
+equiv2 < Intros.
+1 subgoal
+
+  P : nat->Prop
+  c : (P (0))
+  H : (n:nat)(P n)->(P (S n))
+  n : nat
+  ============================
+   (nat_ind P c H n)==(natindd P c H n)
+
+Ahora hacemos Induction sobre n, con lo que nos quedaran dos objetivos:
+probarlo para cuando n vale O y probarlo en el caso de que sea el sucesor
+de otro natural.
+
+equiv2 < Induction n.
+2 subgoals
+
+  P : nat->Prop
+  c : (P (0))
+  H : (n:nat)(P n)->(P (S n))
+  ============================
+   (nat_ind P c H (0))==(natindd P c H (0))
+
+subgoal 2 is:
+ (nat_ind P c H (S n))==(natindd P c H (S n))
+
+Ahora simplificamos el objetivo con Simpl.
+
+equiv2 < Simpl.
+2 subgoals
+
+  P : nat->Prop
+  c : (P (0))
+  H : (n:nat)(P n)->(P (S n))
+  ============================
+   c==c
+
+subgoal 2 is:
+ (nat_ind P c H (S n))==(natindd P c H (S n))
+
+Lo que nos queda es trivial, asi que usamos Trivial.
+
+equiv2 < Trivial.
+1 subgoal
+
+  P : nat->Prop
+  c : (P (0))
+  H : (n:nat)(P n)->(P (S n))
+  n : nat
+  Hrecn : (nat_ind P c H n)==(natindd P c H n)
+  ============================
+   (nat_ind P c H (S n))==(natindd P c H (S n))
+
+Simplificamos el objetivo restante con Simpl.
+
+equiv2 < Simpl.
+1 subgoal
+
+  P : nat->Prop
+  c : (P (0))
+  H : (n:nat)(P n)->(P (S n))
+  n : nat
+  Hrecn : (nat_ind P c H n)==(natindd P c H n)
+  ============================
+   (H n (nat_ind P c H n))==(H n (natindd P c H n))
+
+Vemos que se puede usar Hrecn para reescribir el objetivo, con lo que usamos
+Rewrite Hrecn para que nos quede un objetivo trivial.
+
+equiv2 < Rewrite Hrecn.
+1 subgoal
+
+  P : nat->Prop
+  c : (P (0))
+  H : (n:nat)(P n)->(P (S n))
+  n : nat
+  Hrecn : (nat_ind P c H n)==(natindd P c H n)
+  ============================
+   (H n (natindd P c H n))==(H n (natindd P c H n))
+
+Y aplicamos Trivial para que nos quede demostrado el lema.
+
+equiv2 < Trivial.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+equiv2 < Defined.
+Intros.
+Induction n.
+Simpl.
+Trivial.
+
+Simpl.
+Rewrite Hrecn.
+Trivial.
+
+equiv2 is defined
+
+
+EJERCICIO 23
+
+Coq < Lemma Ejercicio23:(n,m:nat)(n=m)->((pos n)=(pos m))/\((neg n)=(neg m)).
+1 subgoal
+
+  ============================
+   (n,m:nat)n=m->(pos n)=(pos m)/\(neg n)=(neg m)
+
+Hacemos Intros para subir n, m y una prueba de que n=m. 
+
+Ejercicio23 < Intros.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : n=m
+  ============================
+   (pos n)=(pos m)/\(neg n)=(neg m)
+
+Hacemos Split para dividir el objetivo en dos partes (las dos partes del AND).
+
+Ejercicio23 < Split.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : n=m
+  ============================
+   (pos n)=(pos m)
+
+subgoal 2 is:
+ (neg n)=(neg m)
+
+Reescribimos el objetivo usando H.
+
+Ejercicio23 < Rewrite H.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : n=m
+  ============================
+   (pos m)=(pos m)
+
+subgoal 2 is:
+ (neg n)=(neg m)
+
+Lo que nos queda es trivial, asi que usamos Trivial.
+
+Ejercicio23 < Trivial.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : n=m
+  ============================
+   (neg n)=(neg m)
+
+Reescribimos el otro objetivo con H.
+
+Ejercicio23 < Rewrite H.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : n=m
+  ============================
+   (neg m)=(neg m)
+
+Nos vuelve a quedar un objetivo trivial, asi que usamos Trivial.
+
+Ejercicio23 < Trivial.
+Subtree proved!
+
+Ya solo queda guadarlo.
+
+Ejercicio23 < Defined.
+Intros.
+Split.
+Rewrite H.
+Trivial.
+
+Rewrite H.
+Trivial.
+
+Ejercicio23 is defined
+
+
+EJERCICIO 24
+
+Coq < Lemma Ejercicio24:(n,m:nat)((pos n)=(pos m)->(n=m))/\((neg n)=(neg m)->(n=
+m)).
+1 subgoal
+
+  ============================
+   (n,m:nat)((pos n)=(pos m)->n=m)/\((neg n)=(neg m)->n=m)
+
+Primero hacemos Intros para subir las pruebas.
+
+Ejercicio24 < Intros.
+1 subgoal
+
+  n : nat
+  m : nat
+  ============================
+   ((pos n)=(pos m)->n=m)/\((neg n)=(neg m)->n=m)
+
+Ahora hacemos Split para que nos divida el AND del objetivo en dos objetivos.
+
+Ejercicio24 < Split.
+2 subgoals
+
+  n : nat
+  m : nat
+  ============================
+   (pos n)=(pos m)->n=m
+
+subgoal 2 is:
+ (neg n)=(neg m)->n=m
+
+Hacemos Intro para subir una prueba de que (pos n)=(pos m).
+
+Ejercicio24 < Intro.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (pos n)=(pos m)
+  ============================
+   n=m
+
+subgoal 2 is:
+ (neg n)=(neg m)->n=m
+
+Ahora si hacemos Injection sobre H nos queda un objetivo trivial.
+
+Ejercicio24 < Injection H.
+2 subgoals
+
+  n : nat
+  m : nat
+  H : (pos n)=(pos m)
+  ============================
+   n=m->n=m
+
+subgoal 2 is:
+ (neg n)=(neg m)->n=m
+
+Como que una cosa se implique a si misma es trivial pues usamos Trivial.
+
+Ejercicio24 < Trivial.
+1 subgoal
+
+  n : nat
+  m : nat
+  ============================
+   (neg n)=(neg m)->n=m
+
+Con el objetivo restante procedemos de la misma forma.
+Primero hacemos Intro para subir una prueba de que (neg n)=(neg m).
+
+Ejercicio24 < Intro.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (neg n)=(neg m)
+  ============================
+   n=m
+
+Y ahora hacemos Injection sobre esa prueba H.
+
+Ejercicio24 < Injection H.
+1 subgoal
+
+  n : nat
+  m : nat
+  H : (neg n)=(neg m)
+  ============================
+   n=m->n=m
+
+Nos vuelve a quedar algo trivial, asi que usamos Trivial y ya queda probado.
+
+Ejercicio24 < Trivial.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+Ejercicio24 < Defined.
+Intros.
+Split.
+Intro.
+Injection H.
+Trivial.
+
+Intro.
+Injection H.
+Trivial.
+
+Ejercicio24 is defined
+
+
+EJERCICIO 25
+
+Coq < Lemma Ejercicio25:(n,m:nat)(diff (S n) (S m))=(diff n m).
+1 subgoal
+
+  ============================
+   (n,m:nat)(diff (S n) (S m))=(diff n m)
+
+Primero hacemos Intros para subir las pruebas.
+
+Ejercicio25 < Intros.
+1 subgoal
+
+  n : nat
+  m : nat
+  ============================
+   (diff (S n) (S m))=(diff n m)
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio25 < Simpl.
+1 subgoal
+
+  n : nat
+  m : nat
+  ============================
+   (diff n m)=(diff n m)
+
+Lo que nos queda es trivial, asi que usamos Trivial y ya queda probado.
+
+Ejercicio25 < Trivial.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+Ejercicio25 < Defined.
+Intros.
+Simpl.
+Trivial.
+
+Ejercicio25 is defined
+
+
+EJERCICIO 26
+
+Coq < Lemma Ejercicio26_1:(n:nat)(Diff n n cero).
+1 subgoal
+
+  ============================
+   (n:nat)(Diff n n cero)
+
+Primero hacemos Intro para subir la n de tipo nat.
+
+Ejercicio26_1 < Intro.
+1 subgoal
+
+  n : nat
+  ============================
+   (Diff n n cero)
+
+Ahora usamos el primer constructor del tipo Diff y ya queda probado.
+
+Ejercicio26_1 < Apply Diff_n.
+Subtree proved!
+
+Ahora solo queda guardarlo.
+
+Ejercicio26_1 < Defined.
+Intro.
+Apply Diff_n.
+
+Ejercicio26_1 is defined
+
+Coq < Lemma Ejercicio26_2 : (n:nat)(Diff (S n) n (pos O)).
+1 subgoal
+
+  ============================
+   (n:nat)(Diff (S n) n (pos (0)))
+
+Primero hacemos Intro para subir la n de tipo nat.
+
+Ejercicio26_2 < Intro.
+1 subgoal
+
+  n : nat
+  ============================
+   (Diff (S n) n (pos (0)))
+
+Ahora hacemos Induction sobre n.
+
+Ejercicio26_2 < Induction n.
+2 subgoals
+
+  ============================
+   (Diff (1) (0) (pos (0)))
+
+subgoal 2 is:
+ (Diff (S (S n)) (S n) (pos (0)))
+
+Ahora usamos el segundo constructor del tipo Diff pasandole como parametro (1).
+
+Ejercicio26_2 < Apply (Diff_n_O (1)).
+1 subgoal
+
+  n : nat
+  Hrecn : (Diff (S n) n (pos (0)))
+  ============================
+   (Diff (S (S n)) (S n) (pos (0)))
+
+Ahora usamos el cuarto constructor del tipo Diff al que le pasamos como
+parametros (S n), n, (pos (0)) y Hrecn, que es una prueba de (Diff (S n) n (pos (0)).
+
+Ejercicio26_2 < Apply (Diff_S (S n) n (pos (0)) Hrecn).
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+Ejercicio26_2 < Defined.
+Intro.
+Induction n.
+Apply (Diff_n_O (1)).
+
+Apply (Diff_S (S n) n (pos (0)) Hrecn).
+
+Ejercicio26_2 is defined
+
+
+EJERCICIO 27
+
+
+
+EJERCICIO 28
+
+Coq < Lemma Ejercicio28 : (n,m:nat)(Diff n m (diff n m)).
+1 subgoal
+
+  ============================
+   (n,m:nat)(Diff n m (diff n m))
+
+Primero hacemos Induction sobre n.
+
+Ejercicio28 < Induction n.
+2 subgoals
+
+  n : nat
+  ============================
+   (m:nat)(Diff (0) m (diff (0) m))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(Diff n0 m (diff n0 m)))
+  ->(m:nat)(Diff (S n0) m (diff (S n0) m))
+
+Ahora hacemos Induction sobre m.
+
+Ejercicio28 < Induction m.
+3 subgoals
+
+  n : nat
+  m : nat
+  ============================
+   (Diff (0) (0) (diff (0) (0)))
+
+subgoal 2 is:
+ (n0:nat)
+  (Diff (0) n0 (diff (0) n0))->(Diff (0) (S n0) (diff (0) (S n0)))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(Diff n0 m (diff n0 m)))
+  ->(m:nat)(Diff (S n0) m (diff (S n0) m))
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio28 < Simpl.
+3 subgoals
+
+  n : nat
+  m : nat
+  ============================
+   (Diff (0) (0) cero)
+
+subgoal 2 is:
+ (n0:nat)
+  (Diff (0) n0 (diff (0) n0))->(Diff (0) (S n0) (diff (0) (S n0)))
+subgoal 3 is:
+ (n0:nat)
+  ((m:nat)(Diff n0 m (diff n0 m)))
+  ->(m:nat)(Diff (S n0) m (diff (S n0) m))
+
+Ahora aplicamos el constructor Diff_n con (0) como parametro.
+
+Ejercicio28 < Apply (Diff_n (0)).
+2 subgoals
+
+  n : nat
+  m : nat
+  ============================
+   (n0:nat)
+    (Diff (0) n0 (diff (0) n0))->(Diff (0) (S n0) (diff (0) (S n0)))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(Diff n0 m (diff n0 m)))
+  ->(m:nat)(Diff (S n0) m (diff (S n0) m))
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio28 < Intros.
+2 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (Diff (0) n0 (diff (0) n0))
+  ============================
+   (Diff (0) (S n0) (diff (0) (S n0)))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(Diff n0 m (diff n0 m)))
+  ->(m:nat)(Diff (S n0) m (diff (S n0) m))
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio28 < Simpl.
+2 subgoals
+
+  n : nat
+  m : nat
+  n0 : nat
+  H : (Diff (0) n0 (diff (0) n0))
+  ============================
+   (Diff (0) (S n0) (neg n0))
+
+subgoal 2 is:
+ (n0:nat)
+  ((m:nat)(Diff n0 m (diff n0 m)))
+  ->(m:nat)(Diff (S n0) m (diff (S n0) m))
+
+Ahora aplicamos el constructor Diff_O_n con (S n0) como parametro.
+
+Ejercicio28 < Apply (Diff_O_n (S n0)).
+1 subgoal
+
+  n : nat
+  ============================
+   (n0:nat)
+    ((m:nat)(Diff n0 m (diff n0 m)))
+    ->(m:nat)(Diff (S n0) m (diff (S n0) m))
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio28 < Intros.
+1 subgoal
+
+  n : nat
+  n0 : nat
+  H : (m:nat)(Diff n0 m (diff n0 m))
+  m : nat
+  ============================
+   (Diff (S n0) m (diff (S n0) m))
+
+Ahora eliminamos m con la tactica Elim.
+
+Ejercicio28 < Elim m.
+2 subgoals
+
+  n : nat
+  n0 : nat
+  H : (m:nat)(Diff n0 m (diff n0 m))
+  m : nat
+  ============================
+   (Diff (S n0) (0) (diff (S n0) (0)))
+
+subgoal 2 is:
+ (n1:nat)
+  (Diff (S n0) n1 (diff (S n0) n1))
+  ->(Diff (S n0) (S n1) (diff (S n0) (S n1)))
+
+Ahora simplificamos el objetivo con Simpl.
+
+Ejercicio28 < Simpl.
+2 subgoals
+
+  n : nat
+  n0 : nat
+  H : (m:nat)(Diff n0 m (diff n0 m))
+  m : nat
+  ============================
+   (Diff (S n0) (0) (pos n0))
+
+subgoal 2 is:
+ (n1:nat)
+  (Diff (S n0) n1 (diff (S n0) n1))
+  ->(Diff (S n0) (S n1) (diff (S n0) (S n1)))
+
+Ahora usamos el constructor Diff_n_O con (S n0) como parametro.
+
+Ejercicio28 < Apply (Diff_n_O (S n0)).
+1 subgoal
+
+  n : nat
+  n0 : nat
+  H : (m:nat)(Diff n0 m (diff n0 m))
+  m : nat
+  ============================
+   (n1:nat)
+    (Diff (S n0) n1 (diff (S n0) n1))
+    ->(Diff (S n0) (S n1) (diff (S n0) (S n1)))
+
+Ahora hacemos Intros para subir las pruebas.
+
+Ejercicio28 < Intros.
+1 subgoal
+
+  n : nat
+  n0 : nat
+  H : (m:nat)(Diff n0 m (diff n0 m))
+  m : nat
+  n1 : nat
+  H0 : (Diff (S n0) n1 (diff (S n0) n1))
+  ============================
+   (Diff (S n0) (S n1) (diff (S n0) (S n1)))
+
+Ahora aplicamos el constructor Diff_S con los siguientes parametros: n0, n1, (diff n0 n1) 
+y (H n1), con lo que queda probado el lema.
+
+Ejercicio28 < Apply (Diff_S n0 n1 (diff n0 n1) (H n1)).
+Subtree proved!
+
+Ahora solo queda guardarlo.
+
+Ejercicio28 < Defined.
+Induction n.
+Induction m.
+Simpl.
+Apply (Diff_n (0)).
+
+Intros.
+Simpl.
+Apply (Diff_O_n (S n0)).
+
+Intros.
+Elim m.
+Simpl.
+Apply (Diff_n_O (S n0)).
+
+Intros.
+Apply (Diff_S n0 n1 (diff n0 n1) (H n1)).
+
+Ejercicio28 is defined
+
+
+EJERCICIO 29
+
+
+Coq < Section Max.
+
+Coq < Require Arith.
+
+Coq < Definition max :=
+Coq < (nat_rec [_:nat]nat->nat [n1:nat]n1
+Coq < [n1:nat]
+Coq < [Rec:nat->nat]
+Coq < [H0:nat]
+Coq < Cases H0 of
+Coq < O => (S n1)
+Coq < | (S n2) => (S (Rec n2))
+Coq < end).
+max is defined.
+
+Coq < End Max.
+max is discharged.
+
+1)
+
+Probamos la primera propiedad.
+
+Coq < Lemma max_O_r : (a:nat) (max a O)=a.
+1 subgoal
+  
+  ============================
+   (a:nat)(max a (0))=a
+
+Primero hacemos Intro para subir la a de tipo nat.
+
+max_O_r < Intro.
+1 subgoal
+  
+  a : nat
+  ============================
+   (max a (0))=a
+
+Ahora hacemos Induction sobre a y nos quedan dos objetivos: probarlo para cuando a es cero
+y para cuando a es el sucesor de otro natural.
+
+max_O_r < Induction a.
+2 subgoals
+  
+  ============================
+   (max (0) (0))=(0)
+
+subgoal 2 is:
+ (max (S a) (0))=(S a)
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_O_r < Simpl.
+2 subgoals
+  
+  ============================
+   (0)=(0)
+
+subgoal 2 is:
+ (max (S a) (0))=(S a)
+
+Como el objetivo es trivial usamos Trivial.
+
+max_O_r < Trivial.
+1 subgoal
+  
+  a : nat
+  Hreca : (max a (0))=a
+  ============================
+   (max (S a) (0))=(S a)
+
+Volvemos a usar Simpl para simplificar el objetivo.
+
+max_O_r < Simpl.
+1 subgoal
+  
+  a : nat
+  Hreca : (max a (0))=a
+  ============================
+   (S a)=(S a)
+
+Ahora como el objetivo es trivial usamos Trivial y ya nos queda probado.
+
+max_O_r < Trivial.
+Subtree proved!
+
+Ya solo queda guardarlo.
+
+max_O_r < Defined.
+Intro.
+Induction a.
+Simpl.
+Trivial.
+
+Simpl.
+Trivial.
+
+max_O_r is defined
+
+
+2)
+
+Ahora probamos la segunda propiedad de forma analoga a la primera.
+
+Coq < Lemma max_O_l : (a:nat) (max O a)=a.
+1 subgoal
+  
+  ============================
+   (a:nat)(max (0) a)=a
+
+Primero hacemos hacemos Intro para subir la a de tipo nat.
+
+
+max_O_l < Intro.
+1 subgoal
+  
+  a : nat
+  ============================
+   (max (0) a)=a
+
+Ahora hacemos Induction sobre a y nos quedan dos objetivos: probarlo para cuando a es cero
+y probarlo par cuando es el sucesor de otro natural.
+
+max_O_l < Induction a.
+2 subgoals
+  
+  ============================
+   (max (0) (0))=(0)
+
+subgoal 2 is:
+ (max (0) (S a))=(S a)
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_O_l < Simpl.
+2 subgoals
+  
+  ============================
+   (0)=(0)
+
+subgoal 2 is:
+ (max (0) (S a))=(S a)
+
+Como lo que queda es trivial usamos Trivial.
+
+max_O_l < Trivial.
+1 subgoal
+  
+  a : nat
+  Hreca : (max (0) a)=a
+  ============================
+   (max (0) (S a))=(S a)
+
+Volvemos a usar Simpl para simplificar el objetivo.
+
+max_O_l < Simpl.
+1 subgoal
+  
+  a : nat
+  Hreca : (max (0) a)=a
+  ============================
+   (S a)=(S a)
+
+Si usamos trivial ya queda probado el lema.
+
+max_O_l < Trivial.
+Subtree proved!
+
+Y solo queda guardarlo.
+
+max_O_l < Defined.
+Intro.
+Induction a.
+Simpl.
+Trivial.
+
+Simpl.
+Trivial.
+
+max_O_l is defined
+
+
+3)
+
+Ahora probamos la tercera propiedad.
+
+max_sym < Induction a.
+2 subgoals
+  
+  a : nat
+  ============================
+   (b:nat)(max (0) b)=(max b (0))
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_sym < Simpl.
+2 subgoals
+  
+  a : nat
+  ============================
+   (b:nat)b=(max b (0))
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Ahora hacemos Induction sobre b.
+
+max_sym < Induction b.
+3 subgoals
+  
+  a : nat
+  b : nat
+  ============================
+   (0)=(max (0) (0))
+
+subgoal 2 is:
+ (n:nat)n=(max n (0))->(S n)=(max (S n) (0))
+subgoal 3 is:
+ (n:nat)
+  ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_sym < Simpl.
+3 subgoals
+  
+  a : nat
+  b : nat
+  ============================
+   (0)=(0)
+
+subgoal 2 is:
+ (n:nat)n=(max n (0))->(S n)=(max (S n) (0))
+subgoal 3 is:
+ (n:nat)
+  ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Lo que queda es trivial, asi que usamos Trivial.
+
+max_sym < Trivial.
+2 subgoals
+  
+  a : nat
+  b : nat
+  ============================
+   (n:nat)n=(max n (0))->(S n)=(max (S n) (0))
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_sym < Intros.
+2 subgoals
+  
+  a : nat
+  b : nat
+  n : nat
+  H : n=(max n (0))
+  ============================
+   (S n)=(max (S n) (0))
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_sym < Simpl.
+2 subgoals
+  
+  a : nat
+  b : nat
+  n : nat
+  H : n=(max n (0))
+  ============================
+   (S n)=(S n)
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Lo que queda es trivial por lo que usamos Trivial.
+
+max_sym < Trivial.
+1 subgoal
+  
+  a : nat
+  ============================
+   (n:nat)
+    ((b:nat)(max n b)=(max b n))->(b:nat)(max (S n) b)=(max b (S n))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_sym < Intros.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b:nat)(max n b)=(max b n)
+  b : nat
+  ============================
+   (max (S n) b)=(max b (S n))
+
+Ahora eliminamos b usando Elim.
+
+max_sym < Elim b.
+2 subgoals
+  
+  a : nat
+  n : nat
+  H : (b:nat)(max n b)=(max b n)
+  b : nat
+  ============================
+   (max (S n) (0))=(max (0) (S n))
+
+subgoal 2 is:
+ (n0:nat)
+  (max (S n) n0)=(max n0 (S n))->(max (S n) (S n0))=(max (S n0) (S n))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_sym < Simpl.
+2 subgoals
+  
+  a : nat
+  n : nat
+  H : (b:nat)(max n b)=(max b n)
+  b : nat
+  ============================
+   (S n)=(S n)
+
+subgoal 2 is:
+ (n0:nat)
+  (max (S n) n0)=(max n0 (S n))->(max (S n) (S n0))=(max (S n0) (S n))
+
+Lo que queda es trivial, asi que usamos Trivial.
+
+max_sym < Trivial.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b:nat)(max n b)=(max b n)
+  b : nat
+  ============================
+   (n0:nat)
+    (max (S n) n0)=(max n0 (S n))
+    ->(max (S n) (S n0))=(max (S n0) (S n))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_sym < Intros.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b:nat)(max n b)=(max b n)
+  b : nat
+  n0 : nat
+  H0 : (max (S n) n0)=(max n0 (S n))
+  ============================
+   (max (S n) (S n0))=(max (S n0) (S n))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_sym < Simpl.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b:nat)(max n b)=(max b n)
+  b : nat
+  n0 : nat
+  H0 : (max (S n) n0)=(max n0 (S n))
+  ============================
+   (S (max n n0))=(S (max n0 n))
+
+Ahora usamos la propiedad eq_S para simplificar el objetivo.
+
+max_sym < Apply eq_S.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b:nat)(max n b)=(max b n)
+  b : nat
+  n0 : nat
+  H0 : (max (S n) n0)=(max n0 (S n))
+  ============================
+   (max n n0)=(max n0 n)
+
+Ahora si aplicamos H pasandole como parametro n0 ya queda probado el lema.
+
+max_sym < Apply (H n0).
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+max_sym < Defined.
+Induction a.
+Simpl.
+Induction b.
+Simpl.
+Trivial.
+
+Intros.
+Simpl.
+Trivial.
+
+Intros.
+Elim b.
+Simpl.
+Trivial.
+
+Intros.
+Simpl.
+Apply eq_S.
+Apply (H n0).
+
+max_sym is defined
+
+
+4)
+
+Ahora probamos la cuarta propiedad.
+
+Coq < Lemma max_intro_l : (a,b:nat)(le a (max a b)).
+1 subgoal
+
+  ============================
+   (a,b:nat)(le a (max a b))
+
+Primero hacemos Induction sobre a.
+
+max_intro_l < Induction a.
+2 subgoals
+
+  a : nat
+  ============================
+   (b:nat)(le (0) (max (0) b))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le n (max n b)))->(b:nat)(le (S n) (max (S n) b))
+
+Ahora hacemos Induction sobre b.
+
+max_intro_l < Induction b.
+3 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (le (0) (max (0) (0)))
+
+subgoal 2 is:
+ (n:nat)(le (0) (max (0) n))->(le (0) (max (0) (S n)))
+subgoal 3 is:
+ (n:nat)((b:nat)(le n (max n b)))->(b:nat)(le (S n) (max (S n) b))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_l < Simpl.
+3 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (le (0) (0))
+
+subgoal 2 is:
+ (n:nat)(le (0) (max (0) n))->(le (0) (max (0) (S n)))
+subgoal 3 is:
+ (n:nat)((b:nat)(le n (max n b)))->(b:nat)(le (S n) (max (S n) b))
+
+Lo que queda es trivial asi que usamos Trivial.
+
+max_intro_l < Trivial.
+2 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (n:nat)(le (0) (max (0) n))->(le (0) (max (0) (S n)))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le n (max n b)))->(b:nat)(le (S n) (max (S n) b))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_intro_l < Intros.
+2 subgoals
+
+  a : nat
+  b : nat
+  n : nat
+  H : (le (0) (max (0) n))
+  ============================
+   (le (0) (max (0) (S n)))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le n (max n b)))->(b:nat)(le (S n) (max (S n) b))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_l < Simpl.
+2 subgoals
+
+  a : nat
+  b : nat
+  n : nat
+  H : (le (0) (max (0) n))
+  ============================
+   (le (0) (S n))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le n (max n b)))->(b:nat)(le (S n) (max (S n) b))
+
+Ahora aplicamos la propiedad le_O_n con (S n) como parametro.
+
+max_intro_l < Apply (le_O_n (S n)).
+1 subgoal
+
+  a : nat
+  ============================
+   (n:nat)((b:nat)(le n (max n b)))->(b:nat)(le (S n) (max (S n) b))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_intro_l < Intros.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n (max n b))
+  b : nat
+  ============================
+   (le (S n) (max (S n) b))
+
+Ahora eliminamos b con la tactica Elim.
+
+max_intro_l < Elim b.
+2 subgoals
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n (max n b))
+  b : nat
+  ============================
+   (le (S n) (max (S n) (0)))
+
+subgoal 2 is:
+ (n0:nat)(le (S n) (max (S n) n0))->(le (S n) (max (S n) (S n0)))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_l < Simpl.
+2 subgoals
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n (max n b))
+  b : nat
+  ============================
+   (le (S n) (S n))
+
+subgoal 2 is:
+ (n0:nat)(le (S n) (max (S n) n0))->(le (S n) (max (S n) (S n0)))
+
+Ahora lo que queda se puede resolver aplicando le_n con parametro (S n).
+
+max_intro_l < Apply (le_n (S n)).
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n (max n b))
+  b : nat
+  ============================
+   (n0:nat)(le (S n) (max (S n) n0))->(le (S n) (max (S n) (S n0)))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_intro_l < Intros.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n (max n b))
+  b : nat
+  n0 : nat
+  H0 : (le (S n) (max (S n) n0))
+  ============================
+   (le (S n) (max (S n) (S n0)))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_l < Simpl.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n (max n b))
+  b : nat
+  n0 : nat
+  H0 : (le (S n) (max (S n) n0))
+  ============================
+   (le (S n) (S (max n n0)))
+
+Ahora aplicamos le_n_S con parametros n, (max n n0) y (H n0), y ya queda probado el lema.
+
+max_intro_l < Apply (le_n_S n (max n n0) (H n0)).
+Subtree proved!
+
+Ahora solo queda guardarlo.
+
+max_intro_l < Defined.
+Induction a.
+Induction b.
+Simpl.
+Trivial.
+
+Intros.
+Simpl.
+Apply (le_O_n (S n)).
+
+Intros.
+Elim b.
+Simpl.
+Apply (le_n (S n)).
+
+Intros.
+Simpl.
+Apply (le_n_S n (max n n0) (H n0)).
+
+max_intro_l is defined
+
+
+5)
+
+Ahora probamos la quinta propiedad de forma analoga a la anterior.
+
+Coq < Lemma max_intro_r : (a,b:nat)(le b (max a b)).
+1 subgoal
+
+  ============================
+   (a,b:nat)(le b (max a b))
+
+Primero hacemos Induction sobre a.
+
+max_intro_r < Induction a.
+2 subgoals
+
+  a : nat
+  ============================
+   (b:nat)(le b (max (0) b))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le b (max n b)))->(b:nat)(le b (max (S n) b))
+
+Ahora hacemos Induction sobre b.
+
+max_intro_r < Induction b.
+3 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (le (0) (max (0) (0)))
+
+subgoal 2 is:
+ (n:nat)(le n (max (0) n))->(le (S n) (max (0) (S n)))
+subgoal 3 is:
+ (n:nat)((b:nat)(le b (max n b)))->(b:nat)(le b (max (S n) b))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_r < Simpl.
+3 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (le (0) (0))
+
+subgoal 2 is:
+ (n:nat)(le n (max (0) n))->(le (S n) (max (0) (S n)))
+subgoal 3 is:
+ (n:nat)((b:nat)(le b (max n b)))->(b:nat)(le b (max (S n) b))
+
+Lo que queda es trivial asi que usamos Trivial.
+
+max_intro_r < Trivial.
+2 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (n:nat)(le n (max (0) n))->(le (S n) (max (0) (S n)))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le b (max n b)))->(b:nat)(le b (max (S n) b))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_intro_r < Intros.
+2 subgoals
+
+  a : nat
+  b : nat
+  n : nat
+  H : (le n (max (0) n))
+  ============================
+   (le (S n) (max (0) (S n)))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le b (max n b)))->(b:nat)(le b (max (S n) b))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_r < Simpl.
+2 subgoals
+
+  a : nat
+  b : nat
+  n : nat
+  H : (le n (max (0) n))
+  ============================
+   (le (S n) (S n))
+
+subgoal 2 is:
+ (n:nat)((b:nat)(le b (max n b)))->(b:nat)(le b (max (S n) b))
+
+Lo que queda es trivial asi que usamos Trivial.
+
+max_intro_r < Trivial.
+1 subgoal
+
+  a : nat
+  ============================
+   (n:nat)((b:nat)(le b (max n b)))->(b:nat)(le b (max (S n) b))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_intro_r < Intros.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le b (max n b))
+  b : nat
+  ============================
+   (le b (max (S n) b))
+
+Ahora eliminamos b usando la tactica Elim.
+
+max_intro_r < Elim b.
+2 subgoals
+
+  a : nat
+  n : nat
+  H : (b:nat)(le b (max n b))
+  b : nat
+  ============================
+   (le (0) (max (S n) (0)))
+
+subgoal 2 is:
+ (n0:nat)(le n0 (max (S n) n0))->(le (S n0) (max (S n) (S n0)))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_r < Simpl.
+2 subgoals
+
+  a : nat
+  n : nat
+  H : (b:nat)(le b (max n b))
+  b : nat
+  ============================
+   (le (0) (S n))
+
+subgoal 2 is:
+ (n0:nat)(le n0 (max (S n) n0))->(le (S n0) (max (S n) (S n0)))
+
+Ahora usamos la propiedad le_O_n con parametro (S n).
+
+max_intro_r < Apply (le_O_n (S n)).
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le b (max n b))
+  b : nat
+  ============================
+   (n0:nat)(le n0 (max (S n) n0))->(le (S n0) (max (S n) (S n0)))
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_intro_r < Intros.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le b (max n b))
+  b : nat
+  n0 : nat
+  H0 : (le n0 (max (S n) n0))
+  ============================
+   (le (S n0) (max (S n) (S n0)))
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_intro_r < Simpl.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le b (max n b))
+  b : nat
+  n0 : nat
+  H0 : (le n0 (max (S n) n0))
+  ============================
+   (le (S n0) (S (max n n0)))
+
+Ahora aplicamos la propiedad le_n_S con parametros n0, (max n n0) y (H n0).
+
+max_intro_r < Apply (le_n_S n0 (max n n0) (H n0)).
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+max_intro_r < Defined.
+Induction a.
+Induction b.
+Simpl.
+Trivial.
+
+Intros.
+Simpl.
+Trivial.
+
+Intros.
+Elim b.
+Simpl.
+Apply (le_O_n (S n)).
+
+Intros.
+Simpl.
+Apply (le_n_S n0 (max n n0) (H n0)).
+
+max_intro_r is defined
+
+
+6)
+
+Ahora probamos la sexta propiedad.
+
+Coq < Lemma max_id:(a:nat)(max a a)=a.
+1 subgoal
+
+  ============================
+   (a:nat)(max a a)=a
+
+Primero hacemos Intro para subir la a de tipo nat.
+
+max_id < Intro.
+1 subgoal
+
+  a : nat
+  ============================
+   (max a a)=a
+
+Ahora hacemos Induction sobre a y nos quedaran dos objetivos: probarlo para
+cuando a es cero y probarlo para cuando es el sucesor de otro natural.
+
+max_id < Induction a.
+2 subgoals
+
+  ============================
+   (max (0) (0))=(0)
+
+subgoal 2 is:
+ (max (S a) (S a))=(S a)
+
+Ahora simplificamos el objetivo con Simpl.
+
+max_id < Simpl.
+2 subgoals
+
+  ============================
+   (0)=(0)
+
+subgoal 2 is:
+ (max (S a) (S a))=(S a)
+
+Lo que nos queda es trivial, asi que usamos Trivial.
+
+max_id < Trivial.
+1 subgoal
+
+  a : nat
+  Hreca : (max a a)=a
+  ============================
+   (max (S a) (S a))=(S a)
+
+Volvemos a simplificar con Simpl.
+
+max_id < Simpl.
+1 subgoal
+
+  a : nat
+  Hreca : (max a a)=a
+  ============================
+   (S (max a a))=(S a)
+
+Ahora reescribimos el objetivo usando Rewrite Hreca.
+
+max_id < Rewrite Hreca.
+1 subgoal
+
+  a : nat
+  Hreca : (max a a)=a
+  ============================
+   (S a)=(S a)
+
+Ahora si hacemos Trivial ya nos queda probado.
+
+max_id < Trivial.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+max_id < Defined.
+Intro.
+Induction a.
+Simpl.
+Trivial.
+
+Simpl.
+Rewrite Hreca.
+Trivial.
+
+max_id is defined
+
+
+7)
+
+Ahora probamos la septima propiedad.
+
+Coq < Lemma max_le : (a,b:nat) (le a b)->(max a b)=b.
+1 subgoal
+
+  ============================
+   (a,b:nat)(le a b)->(max a b)=b
+
+Primero hacemos Induction sobre a.
+
+max_le < Induction a.
+2 subgoals
+
+  a : nat
+  ============================
+   (b:nat)(le (0) b)->(max (0) b)=b
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(le n b)->(max n b)=b)->(b:nat)(le (S n) b)->(max (S n) b)=b
+
+Ahora hacemos Induction sobre b.
+
+max_le < Induction b.
+3 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (le (0) (0))->(max (0) (0))=(0)
+
+subgoal 2 is:
+ (n:nat)
+  ((le (0) n)->(max (0) n)=n)->(le (0) (S n))->(max (0) (S n))=(S n)
+subgoal 3 is:
+ (n:nat)
+  ((b:nat)(le n b)->(max n b)=b)->(b:nat)(le (S n) b)->(max (S n) b)=b
+
+Como lo que queda es trivial usamos Trivial.
+
+max_le < Trivial.
+2 subgoals
+
+  a : nat
+  b : nat
+  ============================
+   (n:nat)
+    ((le (0) n)->(max (0) n)=n)->(le (0) (S n))->(max (0) (S n))=(S n)
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(le n b)->(max n b)=b)->(b:nat)(le (S n) b)->(max (S n) b)=b
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_le < Intros.
+2 subgoals
+
+  a : nat
+  b : nat
+  n : nat
+  H : (le (0) n)->(max (0) n)=n
+  H0 : (le (0) (S n))
+  ============================
+   (max (0) (S n))=(S n)
+
+subgoal 2 is:
+ (n:nat)
+  ((b:nat)(le n b)->(max n b)=b)->(b:nat)(le (S n) b)->(max (S n) b)=b
+
+Como lo que nos queda es trivial usamos Trivial.
+
+max_le < Trivial.
+1 subgoal
+
+  a : nat
+  ============================
+   (n:nat)
+    ((b:nat)(le n b)->(max n b)=b)
+    ->(b:nat)(le (S n) b)->(max (S n) b)=b
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_le < Intros.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n b)->(max n b)=b
+  b : nat
+  H0 : (le (S n) b)
+  ============================
+   (max (S n) b)=b
+
+Ahora utilizamos H0 usando la tactica Elim.
+
+max_le < Elim H0.
+2 subgoals
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n b)->(max n b)=b
+  b : nat
+  H0 : (le (S n) b)
+  ============================
+   (max (S n) (S n))=(S n)
+
+subgoal 2 is:
+ (m:nat)(le (S n) m)->(max (S n) m)=m->(max (S n) (S m))=(S m)
+
+Ahora aplicamos la propiedad max_id previamente definida, pasandole como
+parametro (S n).
+
+max_le < Apply (max_id (S n)).
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n b)->(max n b)=b
+  b : nat
+  H0 : (le (S n) b)
+  ============================
+   (m:nat)(le (S n) m)->(max (S n) m)=m->(max (S n) (S m))=(S m)
+
+Ahora hacemos Intros para subir las pruebas.
+
+max_le < Intros.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n b)->(max n b)=b
+  b : nat
+  H0 : (le (S n) b)
+  m : nat
+  H1 : (le (S n) m)
+  H2 : (max (S n) m)=m
+  ============================
+   (max (S n) (S m))=(S m)
+
+Ahora simplificamos el objetivo usando Simpl.
+
+max_le < Simpl.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n b)->(max n b)=b
+  b : nat
+  H0 : (le (S n) b)
+  m : nat
+  H1 : (le (S n) m)
+  H2 : (max (S n) m)=m
+  ============================
+   (S (max n m))=(S m)
+
+Ahora aplicamos eq_S para simplificar el objetivo.
+
+max_le < Apply eq_S.
+1 subgoal
+
+  a : nat
+  n : nat
+  H : (b:nat)(le n b)->(max n b)=b
+  b : nat
+  H0 : (le (S n) b)
+  m : nat
+  H1 : (le (S n) m)
+  H2 : (max (S n) m)=m
+  ============================
+   (max n m)=m
+
+Ahora aplicamos H con parametros m y (le_trans_S n m H1), y ya nos queda probado.
+
+max_le < Apply (H m (le_trans_S n m H1)).
+Subtree proved!
+
+Ahora solo queda guardarlo.
+
+max_le < Defined.
+Induction a.
+Induction b.
+Trivial.
+
+Intros.
+Trivial.
+
+Intros.
+Elim H0.
+Apply (max_id (S n)).
+
+Intros.
+Simpl.
+Apply eq_S.
+Apply (H m (le_trans_S n m H1)).
+
+max_le is defined
+
+
+8)
+
+Ahora demostramos la ultima propiedad.
+
+Coq < Lemma max_is_lub : (a,b,c:nat) (le a c)->(le b c)->(le (max a b) c).
+1 subgoal
+
+  ============================
+   (a,b,c:nat)(le a c)->(le b c)->(le (max a b) c)
+
+Primero vamos a subir un a de tipo nat para luego eliminarlo con Elim. 
+A los dos subojetivos que salen le aplicamos Simpl para simplificarlos y
+por ultimo usamos Trivial para resolver el primero.
+
+max_is_lub < Intro a;Elim a;Simpl;Trivial.
+1 subgoal
+  
+  a : nat
+  ============================
+   (n:nat)
+    ((b,c:nat)(le n c)->(le b c)->(le (max n b) c))
+    ->(b,c:nat)
+       (le (S n) c)
+       ->(le b c)
+       ->(le Cases b of
+               O => (S n)
+             | (S n2) => (S (max n n2))
+             end c)
+
+Ahora hacemos Intros para subir las pruebas. Aplicamos Case sobre b para que 
+nos muestre los casos que tiene b y sobre todos ellos aplicamos Simpl para
+simplificarlos. Por ultimo aplicamos Trivial para resolver el primer objetivo.
+
+max_is_lub < Intros n H b;Case b;Simpl;Trivial.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b,c:nat)(le n c)->(le b c)->(le (max n b) c)
+  b : nat
+  ============================
+   (n0,c:nat)(le (S n) c)->(le (S n0) c)->(le (S (max n n0)) c)
+
+Ahora subimos las pruebas con Intros, aplicamos Case c para que nos deje como
+objetivos demostrar el objetivo para todos los casos de c. Sobre todos los casos
+usamos Simpl para simplificarlos y aplicamos Auto con la libreria arith para que
+resuelva el primer objetivo.
+
+max_is_lub < Intros n0 c;Case c;Simpl;Auto with arith.
+1 subgoal
+  
+  a : nat
+  n : nat
+  H : (b,c:nat)(le n c)->(le b c)->(le (max n b) c)
+  b : nat
+  n0 : nat
+  c : nat
+  ============================
+   (le (S n) (0))->(le (S n0) (0))->(le (S (max n n0)) (0))
+
+Ahora hacemos intro para subir una prueba de (le (S n) (0)), aplicamos Absurd
+sobre (le (S n) O) y sobre los dos objetivos usamos Auto with arith para
+terminar de probar el lema.
+
+max_is_lub < Intro H0;Absurd (le (S n) O);Auto with arith.
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+max_is_lub < Defined.
+Intro a; Elim a; Simpl; Trivial.
+Intros n H b; Case b; Simpl; Trivial.
+Intros n0 c; Case c; Simpl; Auto with arith.
+Intro H0; Absurd (le (S n) O); Auto with arith.
+
+max_is_lub is defined
+
+
+EJERCICIO 30
+
+Coq < Definition maxx : nat->nat->nat.
+1 subgoal
+
+  ============================
+   nat->nat->nat
+
+Primero hacemos Intro H para conseguir un H de tipo nat.
+
+maxx < Intro H.
+1 subgoal
+
+  H : nat
+  ============================
+   nat->nat
+
+Ahora eliminamos H usando la tactica Elim.
+
+maxx < Elim H.
+2 subgoals
+
+  H : nat
+  ============================
+   nat->nat
+
+subgoal 2 is:
+ nat->(nat->nat)->nat->nat
+
+Ahora hacemos Intro n1 para conseguir un n1 de tipo nat.
+
+maxx < Intro n1.
+2 subgoals
+
+  H : nat
+  n1 : nat
+  ============================
+   nat
+
+subgoal 2 is:
+ nat->(nat->nat)->nat->nat
+
+Ahora hacemos Exact n1 para decirle cual deberia ser el resultado en ese caso.
+
+maxx < Exact n1.
+1 subgoal
+
+  H : nat
+  ============================
+   nat->(nat->nat)->nat->nat
+
+Ahora hacemos Intros n1 Rec H0 para conseguir un n1 de tipo nat, un Rec de tipo nat->nat
+y un H0 de tipo nat.
+
+maxx < Intros n1 Rec H0.
+1 subgoal
+
+  H : nat
+  n1 : nat
+  Rec : nat->nat
+  H0 : nat
+  ============================
+   nat
+
+Ahora hacemos un Case H0 para que nos deje como objetivos dar una prueba para cada
+uno de los casos de H0.
+
+maxx < Case H0.
+2 subgoals
+
+  H : nat
+  n1 : nat
+  Rec : nat->nat
+  H0 : nat
+  ============================
+   nat
+
+subgoal 2 is:
+ nat->nat
+
+Ahora le decimos lo que deberia dar en ese caso poniendo Exact (S n1).
+
+maxx < Exact (S n1).
+1 subgoal
+
+  H : nat
+  n1 : nat
+  Rec : nat->nat
+  H0 : nat
+  ============================
+   nat->nat
+
+Ahora hacemos Intro n2 para subir un n2 de tipo nat.
+
+maxx < Intro n2.
+1 subgoal
+
+  H : nat
+  n1 : nat
+  Rec : nat->nat
+  H0 : nat
+  n2 : nat
+  ============================
+   nat
+
+Por ultimo le decimos que el resultado que deberia devolver la funcion en el ultimo
+caso deberia ser (S (Rec n2)) con la tactica Exact.
+
+maxx < Exact (S (Rec n2)).
+Subtree proved!
+
+Y ahora solo queda guardarlo.
+
+maxx < Defined.
+Intro H.
+Elim H.
+Intro n1.
+Exact n1.
+
+Intros n1 Rec H0.
+Case H0.
+Exact (S n1).
+
+Intro n2.
+Exact (S (Rec n2)).
+
+maxx is defined
+
+
+Para comprobar que la funcion maxx es igual que la funcion max hacemos un Print.
+
+Coq < Print maxx.
+maxx =
+[H:nat]
+ (nat_rec [_:nat]nat->nat [n1:nat]n1
+   [n1:nat; Rec:(nat->nat); H0:nat]
+    Cases H0 of
+      0 => (S n1)
+    | (S n2) => (S (Rec n2))
+    end H)
+     : nat->nat->nat
+

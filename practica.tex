@@ -1,0 +1,176 @@
+\documentclass[11pt]{article}
+\setlength{\textheight}{25cm}
+\setlength{\textwidth}{15cm}
+\setlength{\oddsidemargin}{.5cm}
+\setlength{\evensidemargin}{.5cm}
+\setlength{\topmargin}{0cm}
+\begin{document}
+\thispagestyle{empty}
+
+EJERCICIO 1
+\begin{coq_example}
+Search and.
+Search or.
+Search eq.
+Search le.
+\end{coq_example}
+
+EJERCICIO 2
+\begin{coq_example}
+Print nat.
+Print le.
+Print lt.
+Print eq_S.
+Print f_equal.
+\end{coq_example}
+
+EJERCICIO 3
+\begin{coq_example}
+Check nat_case.
+\end{coq_example}
+
+EJERCICIO 4
+\begin{coq_example}
+Check (plus O (S O)).
+Check (plus true false).
+\end{coq_example}
+
+EJERCICIO 5
+\begin{coq_example}
+Require Arith.
+Search le.
+\end{coq_example}
+
+EJERCICIO 6
+\begin{coq_example}
+Inductive Zr : Set := cero : Zr | pos : nat->Zr | neg : nat->Zr. 
+
+\end{coq_example}
+
+EJERCICIO 7
+\begin{coq_example}
+Inductive tree012 : Set := c0 :tree012 | c1 : tree012->tree012 | c2 : tree012->tree012->tree012.
+Inductive tree12: Set := c1' : tree12->tree12 | c2' : tree12->tree12->tree12.
+\end{coq_example}
+
+EJERCICIO 8
+\begin{coq_example}
+Inductive LE : nat->nat->Prop := LE_O : (n:nat) (LE O n) | LE_S : (n,m:nat) (LE n m)->(LE (S n) (S m)).
+\end{coq_example}
+
+EJERCICIO 9
+\begin{coq_example}
+Inductive Natural : Zr->Prop := Cero_nat : (Natural cero) | Uno_nat : (Natural (pos O)) | N_nat : (n:nat) (Natural (pos n))->(Natural (pos (S n))).
+\end{coq_example}
+
+EJERCICIO 10
+\begin{coq_example}
+Inductive Diff : nat->nat->Zr->Prop := Diff_n : (n:nat) (Diff n n cero) | Diff_n_O : (n:nat) (Diff n O (pos n)) | Diff_O_n : (n:nat) (Diff O n (neg n)) | Diff_S : (n,m:nat) (z:Zr) (Diff n m z)->(Diff (S n) (S m) z).
+\end{coq_example}
+
+EJERCICIO 11
+\begin{coq_example}
+Inductive SubZ : Zr->Zr->Zr->Prop := SubZ_z : (z:Zr) (SubZ z z cero) | SubZ_z_cero : (z:Zr) (SubZ z cero z) | SubZ_cero_pos : (n:nat) (SubZ cero (pos n) (neg n)) | SubZ_cero_neg : (n:nat) (SubZ cero (neg n) (pos n)) | 
+\end{coq_example}
+
+EJERCICIO 12
+\begin{coq_example}
+Definition Predecesor : nat->nat := [x:nat]Cases x of O => O | (S x) => x end.
+Definition Es_cero : nat->bool := [x:nat]Cases x of O => true | _ => false end.
+\end{coq_example}
+
+EJERCICIO 13
+\begin{coq_example}
+Section Ejercicio13.
+Variables A:Set;P:A->Set.
+Inductive suma : Set := intro: (x:A) (P x) -> suma.
+Definition p1 : suma -> A := [s:suma] Cases s of (intro x _) => x end.
+Definition p2 : (s:suma) (P (p1 s)) := [s:suma] <[t:suma](P (p1 t))>Cases s of (intro x p) => p end.
+End Ejercicio13.
+\end{coq_example}
+
+EJERCICIO 14
+\begin{coq_example}
+Definition Or : bool->bool->bool := [x,y:bool] Cases x of true => true | false => y end.
+\end{coq_example}
+
+EJERCICIO 15
+\begin{coq_example}
+Definition Opuesto : Zr->Zr := [z:Zr] Cases z of cero => cero | (pos n) => (neg n) | (neg n) => (pos n) end.
+\end{coq_example}
+
+EJERCICIO 16
+\begin{coq_example}
+Definition Nat_Zr : nat->Zr := [n:nat] Cases n of O => cero | (S n) => (pos n) end.
+\end{coq_example}
+
+EJERCICIO 17
+\begin{coq_example}
+Fixpoint diff [n:nat] : nat->Zr := [m:nat] Cases n m of O O => cero | O (S n) => (neg n) | (S n) O => (pos n) | (S n) (S m) => (diff n m) end.
+\end{coq_example}
+
+EJERCICIO 18
+\begin{coq_example}
+Definition Suma :Zr->Zr->Zr := [x,y:Zr] Cases x y of cero y => y | x cero =>x | (pos n) (pos m) => (pos (plus n m)) | (neg n) (neg m) => (neg (plus n m)) | (pos n) (neg m) => (diff n m) | (neg m) (pos n) => (diff n m) end.
+\end{coq_example}
+
+EJERCICIO 20
+\begin{coq_example}
+Section Ejercicio20.
+Variables A,B,C:Prop;x,y:Set;P,Q:Set->Prop.
+Lemma distr : A/\(B\/C)->(A/\B)\/(A/\C).
+Lemma neg3 : ~~~A->~A.
+End Ejercicio20.
+\end{coq_example}
+
+EJERCICIO 21
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 22
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 23
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 24
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 25
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 26
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 27
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 28
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 29
+\begin{coq_example}
+
+\end{coq_example}
+
+EJERCICIO 30
+\begin{coq_example}
+
+\end{coq_example}
+
+\end{document}

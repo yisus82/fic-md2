@@ -1,0 +1,282 @@
+EJERCICIO 6:
+
+Inductive Zr: Set:=
+     zo: Zr
+   |pos: nat -> Zr
+   |neg: nat -> Zr.
+
+Definition zrtoz [n:Zr]: Z :=
+   Cases n of
+     zo => ZERO
+   |(pos n) => (POS (anti_convert n))
+   |(neg n) => (NEG (anti_convert n))
+end.
+
+Definition ztozr [n:Z]: Zr :=
+   Cases n of
+     ZERO => zo
+   |(POS n) => (pos (pred(convert n)))
+   |(NEG n) => (neg (pred(convert n)))
+end.
+
+**Prueba:
+Coq < Eval Compute in (ztozr (POS xH)).
+     = (pos (0))
+     : Zr
+
+Coq <  Eval Compute in (ztozr (POS (xO xH))).
+     = (pos (1))
+     : Zr
+
+Coq <  Eval Compute in (ztozr (POS (xI xH))).
+     = (pos (2))
+     : Zr
+
+Coq < Eval Compute in (ztozr ZERO).
+     = zo
+     : Zr
+
+Coq < Eval Compute in (zrtoz zo).
+     = `0`
+     : Z
+Coq < Eval Compute in (zrtoz (pos(1))).
+     = `2`
+     : Z
+
+Coq < Eval Compute in (zrtoz (pos(2))).
+     = `3`
+     : Z
+
+
+
+EJERCICIO 7:
+
+Inductive tree012: Set:=
+     c0: tree012
+   | c1: tree012 -> tree012
+   | c2: tree012 -> tree012 -> tree012.
+
+Inductive tree12: Set:=
+   | c1': tree012 -> tree012
+   | c2': tree012 -> tree012 -> tree012.
+**Da el error: "Error: Non strictly positive occurrence of #GENTERM (REL 
+2) in  tree012->tree012" **
+
+
+**Asi no daria error**
+Inductive tree12: Set:=
+   | c1': tree12 -> tree12
+   | c2': tree12 -> tree12 -> tree12.
+
+
+
+
+EJERCICIO 8:
+
+Inductive LE : nat->nat->Prop :=
+     LE_O : (n:nat)(LE O n)
+   | LE_S : (n,m:nat)(LE n m) -> (LE (S n) (S m)).
+
+ Variables n,m: nat.
+
+Split.
+Intros.
+Elim H.
+Intros.
+Elim n0.
+Apply le_n.
+
+Intros.
+Apply le_S.
+Assumption.
+
+Intros.
+Elim H1.
+Apply le_n.
+Intros.
+Apply le_S.
+Assumption.
+
+Intros.
+Elim H.
+Elim n.
+Apply LE_O.
+
+Intros.
+Apply LE_S.
+Assumption.
+
+Intros.
+Elim H1.
+Intros.
+Apply LE_O.
+
+Intros.
+Apply LE_S.
+Assumption.
+
+
+
+EJERCICIO 12:
+
+Definition predecesor [n:nat]: nat:=
+   Cases n of
+        O => O
+     | (S p) => p
+   end.
+
+Definition es_cero [n:nat]: bool:=
+   Cases n of
+        O => true
+     | (S p) => false
+   end.
+
+
+EJERCICIO 14:
+
+Definition or_bool [a:bool] : bool->bool :=
+   [b:bool]Cases a of
+      true => true
+    | false => b
+   end.
+
+
+Goal ((b:bool)((or_bool true b)=true)).
+Induction b.
+Simpl.
+Trivial.
+
+Simpl.
+Trivial.
+
+ej14a is defined
+
+Goal ((b:bool)((or_bool false b)=b)).  
+Induction b.
+Simpl.
+Trivial.
+
+Simpl.
+Trivial.
+
+ej14b is defined
+
+
+EJERCICIO 9:
+
+Induction Natural :zr := 
+  [n:zr]Cases n of
+     zo => (Natural ero)
+   | (pos p) => (Natural (pos (S p)))
+end.
+
+
+EJERCICIO 10:
+
+Definition predZr [n:Zr]:Zr :=
+   Cases n of
+        zo => (neg (S O))
+     | (pos p) => (pos ( pred p))
+     | (neg p) => (neg (S p))
+   end.
+
+Definition sucZr [n:Zr]:Zr :=
+   Cases n of
+        zo => (pos (S O))
+     | (pos p) => (pos (S p))
+     | (neg p) => (neg (pred p))
+   end.
+
+Fixpoint diff [n,m:Zr]:Zr :=
+   Cases m of
+        zo => n
+     | (pos (S O)) => (diff (predZr n) zo)
+     | (neg (S O)) => (diff (sucZr n) zo)
+     | (pos (S p)) => (diff (predZr n) (pos p))
+     | (neg (S p)) => (diff (sucZr n) (neg p))
+   end.
+
+Fixpoint diff [n,m:Zr]:Zr :=
+   Cases m of
+        zo => n
+     | (pos p) => (diff (predZr n) (pos (pred p)))
+     | (neg p) => (diff (sucZr n) (neg (pred p)))
+   end.
+
+
+EJERCICIO 20:
+
+Goal (a/\(b\/c) -> (a/\b)\/(a/\c)).
+
+Goal ((~~~a)->(~a)).
+Intro.
+Red.
+Intro.
+Elim H.
+Red.
+Intro.
+Trivial.
+Elim H1.
+Assumption.
+
+Variable x: Prop.
+Variable P: Prop->Prop.
+Goal ((a\/((x:Prop)(P x))) -> ((x:Prop)(a\/(P x)))).
+
+
+EJERCICIO 29:
+Section max.
+Require Arith.
+
+Definition max :=
+  (nat_rec [_:nat] nat-> nat [n1:nat]n1
+    [n1:nat]
+      [Rec:nat->nat]
+        [H0:nat]
+          Cases H0 of
+            O => (S n1)
+           | (S n2) => (S (Rec n2))
+          end).
+ 
+Lemma max_sym: (a, b:nat)(max a b)=(max b a).
+Intros a; Elim a; Simpl; Auto.
+Intros n H' b; Case b; Simpl; Auto.
+Qed.
+
+Theorem max_intro_l: (a, b:nat)(le a (max <Max.html> a b)).
+Intros a; Elim a; Simpl; Auto with arith.
+Intros n H' b; Case b; Simpl; Auto with arith.
+Qed.
+
+Theorem max_intro_r: (a, b:nat)(le b (max <Max.html> a b)).
+Intros a; Elim a; Simpl; Auto with arith.
+Intros n H' b; Case b; Simpl; Auto with arith.
+Qed.
+
+Theorem max_le: (a, b:nat) (le a b) ->(max <Max.html> a b)=b.
+Intros a; Elim a; Simpl; Auto with arith.
+Intros n H' b; Case b; Simpl; Auto with arith.
+Qed.
+
+Theorem max_is_lub: (a, b, c:nat) (le a c) -> (le b c) ->(le (max <Max.html> a b) c).
+Intros a; Elim a; Simpl; Auto.
+Intros n H' b; Case b; Simpl; Auto.
+Intros n0 c; Case c; Simpl; Auto with arith.
+Intros H'0; Absurd (le (S n) O); Auto with arith.
+Qed.
+
+EJERCICIO 30:
+Definition max: nat -> nat ->nat.
+Intros H'; Elim H'.
+Intros n1; Exact n1.
+Intros n1 Rec H0; Case H0.
+Exact (S n1).
+Intros n2; Exact (S (Rec n2)).
+Defined.
+
+
+
+
+
+
+
